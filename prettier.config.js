@@ -1,0 +1,7 @@
+export default {
+    singleQuote: false,
+    tabWidth: 4,
+    printWidth: 80,
+    arrowParens: "always",
+    semi: true,
+};

@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+    --font-family-sans:
+        Pretendard, Inter, -apple-system, BlinkMacSystemFont, system-ui,
+        sans-serif;
+}
+
+body {
+    @apply font-sans;
+}
