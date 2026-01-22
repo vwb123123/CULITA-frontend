@@ -6,11 +6,11 @@ function TopHeader() {
         <Link
             to={"/shop"}
             className={twMerge(
-                ["bg-black", "text-white"],
-                ["flex", "justify-center", "items-center"],
-                ["no-underline", "h-[30px]", "text-[11px]", "w-full"],
-                ["font-bold", "leading-[30px]", "tracking-wide"],
+                ["bg-black", "text-white", "text-center"],
+                ["h-[30px]", "text-[11px]", "w-full"],
+                ["font-medium", "leading-[30px]", "tracking-wide"],
                 ["fixed", "top-0", "left-0", "w-full", "z-50"],
+                ["overflow-wrap: break-word"],
             )}
         >
             지금 쿨리타를 만나보세요

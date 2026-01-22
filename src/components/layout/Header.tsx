@@ -22,7 +22,7 @@ const MENU: MenuItem[] = [
 
 const ACCOUNT_MENU_LOGOUT: MenuItem[] = [
     { name: "로그인", path: "/login" },
-    { name: "회원가입", path: "/signup" },
+    { name: "회원가입", path: "/register" },
     { name: "주문조회", path: "/check-order" },
     { name: "자주 묻는 질문", path: "/faq" },
 ];
@@ -187,7 +187,7 @@ function Header() {
                         "bg-white",
                         "z-40",
                     ],
-                    isAccountMenuHovered ? "max-h-[200px]" : "max-h-0",
+                    isAccountMenuHovered ? "h-[240px]" : "max-h-0",
                 )}
                 onMouseEnter={() => setIsAccountMenuHovered(true)}
                 onMouseLeave={() => setIsAccountMenuHovered(false)}
@@ -202,9 +202,9 @@ function Header() {
                                     onClick={(e) => handleMenuClick(item, e)}
                                     className={twMerge([
                                         "block",
-                                        "px-8",
+                                        "px-7",
                                         "py-1",
-                                        "text-[13px]",
+                                        "text-[14px]",
                                         "hover:font-bold",
                                     ])}
                                 >

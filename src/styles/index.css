@@ -1,11 +1,44 @@
 @import "tailwindcss";
 
 @theme {
-    --font-family-sans:
+    --font-sans:
         Pretendard, Inter, -apple-system, BlinkMacSystemFont, system-ui,
         sans-serif;
 }
 
 body {
     @apply font-sans;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body span,
+body p,
+header {
+    will-change: transform;
+}
+
+.swiper-button-prev::before,
+.swiper-button-next::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 14px;
+    height: 14px;
+
+    border-top: 2px solid #000;
+    border-right: 2px solid #000;
+
+    transform-origin: center;
+}
+
+.swiper-button-prev::before {
+    transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+.swiper-button-next::before {
+    transform: translate(-50%, -50%) rotate(45deg);
 }

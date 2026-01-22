@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 function MainVideo() {
     return (
-        <section className="relative w-full h-screen overflow-hidden">
+        <section className={twMerge(["relative", "w-full", "pb-[56.25%]"])}>
             <video
                 autoPlay
                 loop
@@ -11,7 +11,7 @@ function MainVideo() {
                 playsInline
                 className={twMerge(
                     ["absolute", "top-0", "left-0"],
-                    ["w-full", "h-full", "object-cover"],
+                    ["w-full", "h-full", ""],
                     ["will-change-transform"],
                 )}
             >
