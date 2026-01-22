@@ -1,8 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { twMerge } from "tailwind-merge";
-import "swiper/css";
-import "swiper/css/navigation";
 import EmeraldGift from "../../../../SHOP Page/EmeraldGift.jpg";
 import EmeraldGiftHover from "../../../../SHOP Page/EmeraldGiftHover.jpg";
 import LemonGift from "../../../../SHOP Page/LemonGift.jpg";
@@ -63,7 +61,34 @@ function BestProductsSwiper() {
     const [hoveredId, setHoveredId] = useState<number | null>(null);
 
     return (
-        <section className="py-20">
+        <section className="py-20 relative">
+            {/* Navigation 버튼들 - Swiper 외부로 이동 */}
+            <button
+                className={twMerge([
+                    "custom-prev",
+                    "absolute z-10 left-4 top-1/2 -translate-y-1/2",
+                    "w-12 h-12 rounded-full",
+                    "bg-white/70 backdrop-blur",
+                    "flex items-center justify-center",
+                    "hover:bg-white transition-colors",
+                ])}
+            >
+                <FiChevronLeft size={30} className="text-black" />
+            </button>
+
+            <button
+                className={twMerge([
+                    "custom-next",
+                    "absolute z-10 right-4 top-1/2 -translate-y-1/2",
+                    "w-12 h-12 rounded-full",
+                    "bg-white/70 backdrop-blur",
+                    "flex items-center justify-center",
+                    "hover:bg-white transition-colors",
+                ])}
+            >
+                <FiChevronRight size={30} className="text-black" />
+            </button>
+
             <Swiper
                 modules={[Navigation]}
                 navigation={{
@@ -91,7 +116,7 @@ function BestProductsSwiper() {
                             )}
                         >
                             {/* 이미지 */}
-                            <Link to={"/shop/loveEdition"}>
+                            <Link to={`/shop/${item.id}`}>
                                 <img
                                     src={
                                         hoveredId === item.id && item.imageHover
@@ -110,45 +135,22 @@ function BestProductsSwiper() {
                             </Link>
 
                             {/* 상품명 */}
-                            <Link to={"/shop/loveEdition"}>
-                                <h3 className="font-semibold text-base text-center">
+                            <Link to={`/shop/${item.id}`}>
+                                <h3 className="font-semibold text-base text-center mb-2">
                                     {item.name}
                                 </h3>
                             </Link>
 
                             {/* 향 설명 */}
-                            <p className="text-sm text-gray-500 mt-1 text-center">
+                            <p className="text-sm text-gray-500 text-center mb-3">
                                 {item.scent}
                             </p>
 
                             {/* 가격 */}
-                            <p className="mt-3 font-medium">{item.price}</p>
+                            <p className="font-medium">{item.price}</p>
                         </div>
                     </SwiperSlide>
                 ))}
-                <button
-                    className={twMerge([
-                        "custom-prev",
-                        "absolute z-10 left-4 top-1/2 -translate-y-1/2",
-                        "w-12 h-12 rounded-full",
-                        "bg-white/70 backdrop-blur",
-                        "flex items-center justify-center",
-                    ])}
-                >
-                    <FiChevronLeft size={30} className="text-black" />
-                </button>
-
-                <button
-                    className={twMerge([
-                        "custom-next",
-                        "absolute z-10 right-4 top-1/2 -translate-y-1/2",
-                        "w-12 h-12 rounded-full",
-                        "bg-white/70 backdrop-blur",
-                        "flex items-center justify-center",
-                    ])}
-                >
-                    <FiChevronRight size={30} className="text-black" />
-                </button>
             </Swiper>
         </section>
     );
