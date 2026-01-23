@@ -98,7 +98,7 @@ function Login() {
                                     "비밀번호는 최소 6자 이상이어야 합니다.",
                             },
                         })}
-                        className={twMerge(["mb-10", "h-[40px]"])}
+                        className={twMerge(["mb-3", "h-[40px]"])}
                     />
                 </div>
                 {errors.root && (
@@ -107,6 +107,7 @@ function Login() {
                             "text-red-600",
                             "text-sm",
                             "text-center",
+                            "mb-3",
                         ])}
                     >
                         {errors.root.message}
