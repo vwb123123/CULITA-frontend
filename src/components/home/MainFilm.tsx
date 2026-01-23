@@ -101,14 +101,16 @@ function MainFilm() {
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.1 }}
                         className={twMerge(
-                            "columns-1 md:columns-2 lg:columns-3 gap-6 max-w-[1920px] mx-auto space-y-6",
+                            ["columns-1", "md:columns-2", "lg:columns-3"],
+                            ["gap-6", "max-w-[1920px]"],
+                            ["space-y-6", "mx-auto"],
                         )}
                     >
                         {FILM_PHOTO.map((item, index) => (
                             <motion.li
                                 key={index}
                                 variants={itemVariants}
-                                className="break-inside-avoid"
+                                className={twMerge(["break-inside-avoid"])}
                             >
                                 <img
                                     src={item.image}
@@ -117,7 +119,7 @@ function MainFilm() {
                                         ["w-full", "h-auto", "object-contain"],
                                         ["rounded-[20px]", " cursor-pointer"],
                                         ["transition-transform"],
-                                        ["duration-300", "hover:scale-[1.03]"],
+                                        ["duration-300", "hover:scale-[1.05]"],
                                     )}
                                 />
                             </motion.li>
