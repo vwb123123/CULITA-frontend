@@ -8,6 +8,7 @@ import CheckOrder from "../pages/account/CheckOrder.tsx";
 import MyPage from "../pages/account/mypages/MyPage.tsx";
 import CartPage from "../pages/(shop)/CartPage.tsx";
 import ShopPage from "../pages/(shop)/ShopPage.tsx";
+import BrandPage from "../pages/(brand)/BrandPage.tsx";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
             { path: "faq", element: <FaQ /> },
             { path: "cart", element: <CartPage /> },
             { path: "shop", element: <ShopPage /> },
+            { path: "brand", element: <BrandPage /> },
         ],
     },
 ]);

@@ -1,4 +1,4 @@
-import type { Category, BreadcrumbItem } from "./category";
+import type { Category, BreadcrumbsItem } from "./category";
 
 export interface MetaResponse {
     total: number;
@@ -8,15 +8,13 @@ export interface MetaResponse {
 
 export interface Product {
     id: number;
+    image: string;
+    imageHover?: string;
     name: string;
-    description: string;
-    price: number;
-    categoryId: number;
-    stock: number;
+    scent: string;
+    price: string;
     isBest?: boolean;
     isNew?: boolean;
-    createdAt: string;
-    updatedAt: string;
 }
 
 export interface ProductImage {
@@ -29,7 +27,7 @@ export interface ProductImage {
 // 상품 고시 정보
 export interface ProductDetail extends Product {
     category: Category;
-    breadcrumbs: BreadcrumbItem[];
+    breadcrumbs: BreadcrumbsItem[];
     productName: string;
     volume: string;
     efficacy_Effects: string;

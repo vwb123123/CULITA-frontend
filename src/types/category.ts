@@ -2,13 +2,16 @@ export interface Category {
     id: number;
     name: string;
     path: string;
-    parentId: number | null;
-    createdAt: string;
-    updatedAt: string;
+    parentId: null;
+    breadcrumbs: BreadcrumbsItem[];
 }
 
-export interface BreadcrumbItem {
+export interface BreadcrumbsItem {
     id: number;
     name: string;
     path: string;
+}
+
+export interface CategoryTree extends Category {
+    children: Category[];
 }

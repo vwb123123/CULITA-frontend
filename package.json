@@ -11,10 +11,13 @@
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.1.18",
+        "@types/aos": "^3.0.7",
+        "aos": "^2.3.4",
         "axios": "^1.13.2",
         "dayjs": "^1.11.19",
         "firebase": "^12.8.0",
         "framer-motion": "^12.28.1",
+        "locomotive-scroll": "^5.0.1",
         "react": "^19.2.0",
         "react-daum-postcode": "^3.2.0",
         "react-dom": "^19.2.0",
