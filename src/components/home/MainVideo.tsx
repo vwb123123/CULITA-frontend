@@ -1,4 +1,4 @@
-import mainVideo from "../../../../mainPage/CULITA_DTC_PC_23s.mp4";
+import mainVideo from "../../assets/mainPage/CULITA_DTC_PC_23s.mp4";
 import { twMerge } from "tailwind-merge";
 
 function MainVideo() {

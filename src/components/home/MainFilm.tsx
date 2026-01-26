@@ -1,19 +1,19 @@
 import { twMerge } from "tailwind-merge";
 import { useScrollReveal } from "../../store/useScrollReveal.ts";
 import { motion, type Variants } from "framer-motion";
-import mainFilm1 from "../../../../mainPage/MainFilm.jpg";
-import mainFilm2 from "../../../../mainPage/MainFilm2.jpg";
-import mainFilm3 from "../../../../mainPage/MainFilm3.jpg";
-import mainFilm4 from "../../../../mainPage/MainFilm4.jpg";
-import mainFilm5 from "../../../../mainPage/MainFilm5.jpg";
-import mainFilm6 from "../../../../mainPage/MainFilm6.jpg";
-import mainFilm7 from "../../../../mainPage/MainFilm7.jpg";
-import mainFilm8 from "../../../../mainPage/MainFilm8.jpg";
-import mainFilm9 from "../../../../mainPage/MainFilm9.gif";
-import mainFilm10 from "../../../../mainPage/MainFilm10.jpg";
-import mainFilm11 from "../../../../mainPage/MainFilm11.jpg";
-import mainFilm12 from "../../../../mainPage/MainFilm12.jpg";
-import ForCulita from "../../../../mainPage/for-me-culita.svg";
+import mainFilm1 from "../../assets/mainPage/MainFilm.jpg";
+import mainFilm2 from "../../assets/mainPage/MainFilm2.jpg";
+import mainFilm3 from "../../assets/mainPage/MainFilm3.jpg";
+import mainFilm4 from "../../assets/mainPage/MainFilm4.jpg";
+import mainFilm5 from "../../assets/mainPage/MainFilm5.jpg";
+import mainFilm6 from "../../assets/mainPage/MainFilm6.jpg";
+import mainFilm7 from "../../assets/mainPage/MainFilm7.jpg";
+import mainFilm8 from "../../assets/mainPage/MainFilm8.jpg";
+import mainFilm9 from "../../assets/mainPage/MainFilm9.gif";
+import mainFilm10 from "../../assets/mainPage/MainFilm10.jpg";
+import mainFilm11 from "../../assets/mainPage/MainFilm11.jpg";
+import mainFilm12 from "../../assets/mainPage/MainFilm12.jpg";
+import ForCulita from "../../assets/mainPage/for-me-culita.svg";
 import { Link } from "react-router";
 
 const FILM_PHOTO = [
@@ -116,7 +116,6 @@ function MainFilm() {
                                     src={item.image}
                                     alt={`Film ${index + 1}`}
                                     className={twMerge(
-                                        ["w-full", "h-auto", "object-contain"],
                                         ["rounded-[20px]", " cursor-pointer"],
                                         ["transition-transform"],
                                         ["duration-300", "hover:scale-[1.05]"],

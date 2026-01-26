@@ -3,7 +3,7 @@ import useCartStore from "../../store/useCartStore.ts";
 import useAuthStore from "../../store/useAuthStore.ts"; // 추가
 import { twMerge } from "tailwind-merge";
 import { IoIosMenu } from "react-icons/io";
-import logo from "../../../../mainPage/logo2.png";
+import logo from "../../assets/mainPage/logo2.png";
 import { type MouseEvent, useState } from "react";
 
 interface MenuItem {
@@ -36,9 +36,9 @@ const ACCOUNT_MENU_LOGIN: MenuItem[] = [
 function Header() {
     const navigate = useNavigate();
 
-    const { getTotalItems } = useCartStore();
     const { isLoggedIn, logout } = useAuthStore();
 
+    const getTotalItems = useCartStore((state) => state.getTotalItems);
     const cartItemsCount = getTotalItems();
 
     const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);

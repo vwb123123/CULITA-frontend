@@ -1,7 +1,7 @@
-import main1 from "../../../../mainPage/Main1.jpg";
-import main2 from "../../../../mainPage/Main2.jpg";
-import main3 from "../../../../mainPage/Main3.jpg";
-import main4 from "../../../../mainPage/Main4.jpg";
+import main1 from "../../assets/mainPage/Main1.jpg";
+import main2 from "../../assets/mainPage/Main2.jpg";
+import main3 from "../../assets/mainPage/Main3.jpg";
+import main4 from "../../assets/mainPage/Main4.jpg";
 import { twMerge } from "tailwind-merge";
 import { Link } from "react-router";
 import { useScrollReveal } from "../../store/useScrollReveal.ts";

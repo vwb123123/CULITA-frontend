@@ -15,7 +15,7 @@ interface CartStore {
     removeItem: (id: number) => void;
     updateQuantity: (id: number, quantity: number) => void;
     clearCart: () => void;
-    getTotalItems: () => number;
+    getTotalItems: () => number; // 추가
     getTotalPrice: () => number;
 }
 
@@ -23,15 +23,12 @@ const useCartStore = create<CartStore>()(
     persist(
         (set, get) => ({
             items: [],
-
             addItem: (item) =>
                 set((state) => {
                     const existingItem = state.items.find(
                         (i) => i.id === item.id,
                     );
-
                     if (existingItem) {
-                        // 이미 있는 상품이면 수량만 증가
                         return {
                             items: state.items.map((i) =>
                                 i.id === item.id
@@ -42,47 +39,41 @@ const useCartStore = create<CartStore>()(
                                     : i,
                             ),
                         };
-                    } else {
-                        // 새로운 상품 추가
-                        return {
-                            items: [...state.items, item],
-                        };
                     }
+                    return { items: [...state.items, item] };
                 }),
-
             removeItem: (id) =>
                 set((state) => ({
                     items: state.items.filter((item) => item.id !== id),
                 })),
-
             updateQuantity: (id, quantity) =>
                 set((state) => ({
                     items: state.items.map((item) =>
-                        item.id === id ? { ...item, quantity } : item,
+                        item.id === id
+                            ? { ...item, quantity: Math.max(1, quantity) }
+                            : item,
                     ),
                 })),
-
             clearCart: () => set({ items: [] }),
 
+            // 헤더에서 사용할 총 수량 계산 로직
             getTotalItems: () => {
-                const state = get();
-                return state.items.reduce(
+                return get().items.reduce(
                     (total, item) => total + item.quantity,
                     0,
                 );
             },
 
             getTotalPrice: () => {
-                const state = get();
-                return state.items.reduce(
-                    (total, item) => total + item.price * item.quantity,
+                const items = get().items || [];
+                return items.reduce(
+                    (total, item) =>
+                        total + (item.price || 0) * (item.quantity || 0),
                     0,
                 );
             },
         }),
-        {
-            name: "cart-storage",
-        },
+        { name: "cart-storage" },
     ),
 );
 
