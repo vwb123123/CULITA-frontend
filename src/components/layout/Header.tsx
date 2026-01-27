@@ -38,10 +38,9 @@ function Header() {
 
     const { isLoggedIn, logout } = useAuthStore();
 
-    const getTotalItems = useCartStore((state) => state.getTotalItems);
+    const getTotalItems = useCartStore((state) => state.getTotalCount);
     const cartItemsCount = getTotalItems();
 
-    const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
     const [isAccountMenuHovered, setIsAccountMenuHovered] = useState(false);
     const [isHeaderHovered, setIsHeaderHovered] = useState(false);
 
@@ -110,16 +109,13 @@ function Header() {
                         <nav
                             className={twMerge(
                                 ["hidden", "lg:flex", "flex"],
-                                ["items-center", "h-full"],
-                                ["font-semibold", "gap-8"],
+                                ["items-center", "h-full", "text-[16.5px]"],
+                                ["font-normal", "gap-8"],
                             )}
                         >
                             {/* 메뉴 구성 */}
                             {MENU.map((menu) => (
                                 <div
-                                    onMouseEnter={() =>
-                                        setHoveredMenu(menu.name)
-                                    }
                                     key={menu.name}
                                     className={twMerge(
                                         ["relative", "justify-center"],
@@ -127,7 +123,6 @@ function Header() {
                                     )}
                                 >
                                     <Link
-                                        key={menu.name}
                                         to={menu.path}
                                         className={twMerge([
                                             "relative",

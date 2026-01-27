@@ -1,4 +1,4 @@
-import type { Category, BreadcrumbsItem } from "./category";
+import type { Category, BreadcrumbItems } from "./category";
 
 export interface MetaResponse {
     total: number;
@@ -7,38 +7,6 @@ export interface MetaResponse {
 }
 
 export interface Product {
-    id: number;
-    image: string;
-    imageHover?: string;
-    name: string;
-    scent: string;
-    price: string;
-    isBest?: boolean;
-    isNew?: boolean;
-}
-
-export interface ProductImage {
-    id: number;
-    url: string;
-    type: "main" | "hover" | "detail"; // 메인, 호버, 상세 이미지
-    order: number; // 이미지 순서
-}
-
-// 상품 고시 정보
-export interface ProductDetail extends Product {
-    category: Category;
-    breadcrumbs: BreadcrumbsItem[];
-    productName: string;
-    volume: string;
-    efficacy_Effects: string;
-    ingredients: string;
-    manufacturer: string;
-    brandCompany: string;
-    precautions: string;
-}
-
-// 상품 목록 조회용
-export interface ProductListItem {
     id: number;
     name: string;
     description: string;
@@ -49,6 +17,56 @@ export interface ProductListItem {
     isBest?: boolean;
     isNew?: boolean;
 }
+
+export interface ProductImage {
+    id: number;
+    url: string;
+    type: "main" | "hover" | "detail";
+    order: number;
+}
+
+// 상품 고시 정보
+export interface ProductDetail {
+    id: number;
+    name: string;
+    price: number;
+
+    category: Category;
+    breadcrumbs: BreadcrumbItems[];
+
+    images: ProductImage[];
+
+    volume: string;
+    efficacyEffects: string;
+    ingredients: string;
+    manufacturer: string;
+    brandCompany: string;
+    precautions: string;
+
+    isBest?: boolean;
+    isNew?: boolean;
+}
+
+export interface ProductCard {
+    id: number;
+    image: string;
+    imageHover?: string;
+    name: string;
+    scent?: string;
+    price: number;
+    isBest?: boolean;
+    isNew?: boolean;
+}
+
+export const mapProductToCard = (product: Product): ProductCard => ({
+    id: product.id,
+    name: product.name,
+    price: product.price,
+    image: product.thumbnailUrl,
+    imageHover: product.hoverImageUrl,
+    isBest: product.isBest,
+    isNew: product.isNew,
+});
 
 // 목록 조회 응답 타입
 export interface ProductListResponse {

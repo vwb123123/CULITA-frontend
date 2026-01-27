@@ -1,17 +1,21 @@
+// 카테고리
 export interface Category {
     id: number;
     name: string;
     path: string;
-    parentId: null;
-    breadcrumbs: BreadcrumbsItem[];
+    parentId: number | null;
+    children: (Category | null)[];
 }
 
-export interface BreadcrumbsItem {
+// breadcrumb 아이템
+export interface BreadcrumbItems {
     id: number;
     name: string;
     path: string;
 }
 
-export interface CategoryTree extends Category {
-    children: Category[];
+// API 전체 응답 타입
+export interface CategoryResponse {
+    category: Category;
+    breadcrumbs: BreadcrumbItems[];
 }

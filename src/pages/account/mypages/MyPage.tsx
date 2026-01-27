@@ -41,15 +41,11 @@ const MyPage = () => {
             </h2>
 
             <nav
-                className={twMerge([
-                    "flex",
-                    "flex-wrap",
-                    "justify-center",
-                    "items-center",
-                    "gap-x-6",
-                    "gap-y-4",
-                    "mb-12",
-                ])}
+                className={twMerge(
+                    ["flex", "flex-wrap"],
+                    ["justify-center", "items-center"],
+                    ["gap-x-6", "gap-y-4", "mb-12"],
+                )}
             >
                 {TABS.map((tab) => (
                     <button
@@ -84,18 +80,12 @@ const MyPage = () => {
                 /* 주문내역조회 및 기타 탭 뷰 */
                 <>
                     <div
-                        className={twMerge([
-                            "flex",
-                            "flex-col",
-                            "md:flex-row",
-                            "items-center",
-                            "justify-center",
-                            "gap-3",
-                            "mb-16",
-                            "border-t",
-                            "border-gray-100",
-                            "pt-10",
-                        ])}
+                        className={twMerge(
+                            ["flex", "flex-col", "md:flex-row"],
+                            ["items-center", "justify-center"],
+                            ["gap-3", "mb-16", "border-t"],
+                            ["border-gray-100", "pt-10"],
+                        )}
                     >
                         <div className={twMerge(["relative", "w-[220px]"])}>
                             <select

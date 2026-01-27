@@ -1,12 +1,9 @@
 import { twMerge } from "tailwind-merge";
-import type { User } from "../../../types/user";
+import useAuthStore from "../../../store/useAuthStore.ts";
 
-interface MyPageHomeProps {
-    user: User | null;
-    logout: () => void;
-}
+const MyPageHome = () => {
+    const { user, logout } = useAuthStore();
 
-const MyPageHome = ({ user, logout }: MyPageHomeProps) => {
     return (
         <div
             className={twMerge([

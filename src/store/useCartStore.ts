@@ -1,79 +1,115 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import type { CartItem } from "../types/cart.ts";
+import {
+    getCart,
+    addToCart,
+    updateCartItem,
+    removeCartItem,
+} from "../api/cart.api.ts";
 
-interface CartItem {
-    id: number;
-    name: string;
-    price: number;
-    quantity: number;
-    image?: string;
-}
-
-interface CartStore {
+interface CartState {
+    cartId: number | null;
     items: CartItem[];
-    addItem: (item: CartItem) => void;
-    removeItem: (id: number) => void;
-    updateQuantity: (id: number, quantity: number) => void;
-    clearCart: () => void;
-    getTotalItems: () => number; // 추가
+    cartTotal: number;
+    loading: boolean;
+
+    fetchCart: () => Promise<void>;
+
+    //  장바구니 조작
+    addItem: (productId: number, quantity: number) => Promise<void>;
+    updateQuantity: (itemId: number, quantity: number) => Promise<void>;
+    removeItem: (itemId: number) => Promise<void>;
+
+    //  UI 계산용
+    getTotalCount: () => number;
     getTotalPrice: () => number;
 }
 
-const useCartStore = create<CartStore>()(
+const useCartStore = create<CartState>()(
     persist(
         (set, get) => ({
+            cartId: null,
             items: [],
-            addItem: (item) =>
-                set((state) => {
-                    const existingItem = state.items.find(
-                        (i) => i.id === item.id,
-                    );
-                    if (existingItem) {
-                        return {
-                            items: state.items.map((i) =>
-                                i.id === item.id
-                                    ? {
-                                          ...i,
-                                          quantity: i.quantity + item.quantity,
-                                      }
-                                    : i,
-                            ),
-                        };
-                    }
-                    return { items: [...state.items, item] };
-                }),
-            removeItem: (id) =>
-                set((state) => ({
-                    items: state.items.filter((item) => item.id !== id),
-                })),
-            updateQuantity: (id, quantity) =>
-                set((state) => ({
-                    items: state.items.map((item) =>
-                        item.id === id
-                            ? { ...item, quantity: Math.max(1, quantity) }
+            cartTotal: 0,
+            loading: false,
+
+            fetchCart: async () => {
+                set({ loading: true });
+                try {
+                    const cart = await getCart();
+                    set({
+                        cartId: cart.id,
+                        items: cart.items,
+                        cartTotal: cart.cartTotal,
+                    });
+                } catch (e) {
+                    console.log("장바구니 로드 실패", e);
+                } finally {
+                    set({ loading: false });
+                }
+            },
+
+            addItem: async (productId, quantity) => {
+                try {
+                    await addToCart(productId, quantity);
+                    await get().fetchCart(); // 서버 기준으로 재동기화
+                } catch (e) {
+                    console.log("장바구니 담기 실패", e);
+                    throw e;
+                }
+            },
+
+            updateQuantity: async (itemId, quantity) => {
+                if (quantity < 1) return;
+
+                const prevItems = get().items;
+
+                set({
+                    items: prevItems.map((item) =>
+                        item.id === itemId
+                            ? {
+                                  ...item,
+                                  quantity,
+                                  totalPrice: item.product.price * quantity,
+                              }
                             : item,
                     ),
-                })),
-            clearCart: () => set({ items: [] }),
+                });
 
-            // 헤더에서 사용할 총 수량 계산 로직
-            getTotalItems: () => {
-                return get().items.reduce(
-                    (total, item) => total + item.quantity,
-                    0,
-                );
+                try {
+                    await updateCartItem(itemId, quantity);
+                    await get().fetchCart();
+                } catch (e) {
+                    set({ items: prevItems });
+                    console.log("수량 변경 실패", e);
+                }
             },
 
-            getTotalPrice: () => {
-                const items = get().items || [];
-                return items.reduce(
-                    (total, item) =>
-                        total + (item.price || 0) * (item.quantity || 0),
-                    0,
-                );
+            removeItem: async (itemId) => {
+                const prevItems = get().items;
+
+                set({
+                    items: prevItems.filter((item) => item.id !== itemId),
+                });
+
+                try {
+                    await removeCartItem(itemId);
+                    await get().fetchCart();
+                } catch (e) {
+                    set({ items: prevItems });
+                    console.log("장바구니 삭제 실패", e);
+                }
             },
+
+            getTotalCount: () =>
+                get().items.reduce((total, item) => total + item.quantity, 0),
+
+            getTotalPrice: () => get().cartTotal,
         }),
-        { name: "cart-storage" },
+        {
+            name: "cart-storage",
+        },
     ),
 );
 
