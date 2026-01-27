@@ -34,13 +34,20 @@ function EventPage() {
                                 onClick={() => {
                                     setActiveTab(tab);
                                 }}
-                                className={twMerge([])}
+                                className={twMerge(
+                                    ["text-[24px]", "font-bold"],
+                                    activeTab === tab
+                                        ? ["border-b-2", "border-b-[#FF4600]"]
+                                        : ["border-none"],
+                                )}
                             >
-                                <Link to={"/"}>{tab}</Link>
+                                {tab}
                             </li>
                         ))}
                     </ul>
                 </nav>
+
+                {}
             </header>
         </div>
     );
