@@ -23,6 +23,8 @@ export interface LoginFormType {
 
 export interface LoginResponse {
     message: string;
-    token: string;
-    user: User;
+    data: {
+        token: string;
+        user: User;
+    };
 }
