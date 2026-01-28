@@ -12,7 +12,7 @@ import gift1 from "../../../assets/EVENT Page/CULITA 5월의 선물/gift_1.png";
 import gift2 from "../../../assets/EVENT Page/CULITA 5월의 선물/gift_2.png";
 import gift3 from "../../../assets/EVENT Page/CULITA 5월의 선물/gift_3.png";
 
-function CulitasSeason3() { {
+function CulitaSeason3() {
     const navigate = useNavigate();
 
     return (
@@ -463,4 +463,5 @@ function CulitasSeason3() { {
         </div>
     );
 }
-export default CulitasSeason3;
+
+export default CulitaSeason3;

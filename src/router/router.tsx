@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, redirect } from "react-router";
 import Layout from "../layouts/Layout.tsx";
 import Home from "../pages/Home.tsx";
 import Login from "../pages/account/Login.tsx";
@@ -24,6 +24,32 @@ import MayPresent from "../pages/(event)/(eventDetailPages)/MayPresent.tsx";
 import CulitasSeason3 from "../pages/(event)/(eventDetailPages)/CulitasSeason3.tsx";
 import CulitasSeason2 from "../pages/(event)/(eventDetailPages)/CulitasSeason2.tsx";
 import CulitasSeason1 from "../pages/(event)/(eventDetailPages)/CulitasSeason1.tsx";
+import useAuthStore from "../store/useAuthStore.ts";
+import AdminLayout from "../layouts/AdminLayout.tsx";
+import AdminUserList from "../pages/(admin)/users/AdminUserList.tsx";
+import AdminUserCreate from "../pages/(admin)/users/AdminUserCreate.tsx";
+import AdminUserEdit from "../pages/(admin)/users/AdminUserEdit.tsx";
+import AdminCategoryList from "../pages/(admin)/categories/AdminCategoryList.tsx";
+import AdminCategoryCreate from "../pages/(admin)/categories/AdminCategoryCreate.tsx";
+import AdminCategoryEdit from "../pages/(admin)/categories/AdminCategoryEdit.tsx";
+import AdminProductList from "../pages/(admin)/products/AdminProductList.tsx";
+import AdminProductCreate from "../pages/(admin)/products/AdminProductCreate.tsx";
+import AdminProductEdit from "../pages/(admin)/products/AdminProductEdit.tsx";
+
+export const adminOnlyLoader = () => {
+    const { isLoggedIn, user } = useAuthStore.getState();
+    if (!isLoggedIn) {
+        alert("관리자 로그인이 필요합니다.");
+        return redirect("/login");
+    }
+
+    if (user?.role !== "ADMIN") {
+        alert("접근 권한이 없습니다.");
+        return redirect("/");
+    }
+
+    return null;
+};
 
 const router = createBrowserRouter([
     {
@@ -76,5 +102,38 @@ const router = createBrowserRouter([
             },
         ],
     },
+    {
+        path: "/admin",
+        element: <AdminLayout />,
+        loader: adminOnlyLoader,
+        children: [
+            { index: true, element: <div>대시보드 페이지 (준비중)</div> },
+            {
+                path: "users",
+                children: [
+                    { index: true, element: <AdminUserList /> },
+                    { path: "create", element: <AdminUserCreate /> },
+                    { path: ":id", element: <AdminUserEdit /> },
+                ],
+            },
+            {
+                path: "categories",
+                children: [
+                    { index: true, element: <AdminCategoryList /> },
+                    { path: "create", element: <AdminCategoryCreate /> },
+                    { path: ":path/edit", element: <AdminCategoryEdit /> },
+                ],
+            },
+            {
+                path: "products",
+                children: [
+                    { index: true, element: <AdminProductList /> },
+                    { path: "create", element: <AdminProductCreate /> },
+                    { path: ":id", element: <AdminProductEdit /> },
+                ],
+            },
+        ],
+    },
 ]);
+
 export default router;

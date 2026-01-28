@@ -4,7 +4,7 @@ export interface Category {
     name: string;
     path: string;
     parentId: number | null;
-    children: (Category | null)[];
+    children: Category[];
 }
 
 // breadcrumb 아이템

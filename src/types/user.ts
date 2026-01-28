@@ -6,8 +6,8 @@ export interface RegisterResponse {
 export interface User {
     id: number;
     username: string;
-    password: string;
-    password_confirm: string;
+    password?: string;
+    password_confirm?: string;
     name: string;
     phoneNumber: string;
     email: string;

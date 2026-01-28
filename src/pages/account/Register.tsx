@@ -81,7 +81,7 @@ function Register() {
                                 required: "아이디 항목은 필수값입니다.",
                             })}
                             error={errors.username}
-                            className={"h-[40px]"}
+                            className={"h-10"}
                         />
                     </div>
                     <div className={twMerge(["flex", "flex-col", "gap-2"])}>
@@ -102,7 +102,7 @@ function Register() {
                                         "비밀번호는 최소 10자 이상이어야 합니다.",
                                 },
                             })}
-                            className={"h-[40px]"}
+                            className={"h-10"}
                         />
                     </div>
                     <div className={twMerge(["flex", "flex-col", "gap-2"])}>
@@ -119,7 +119,7 @@ function Register() {
                                     value === watch("password") ||
                                     "비밀번호가 일치하지 않습니다.",
                             })}
-                            className={"h-[40px]"}
+                            className={"h-10"}
                         />
                     </div>
                     <div className={twMerge(["flex", "flex-col", "gap-2"])}>
@@ -136,7 +136,7 @@ function Register() {
                                     message: "이름은 2글자 이상 입력해주세요.",
                                 },
                             })}
-                            className={"h-[40px]"}
+                            className={"h-10"}
                         />
                     </div>
 
@@ -152,10 +152,10 @@ function Register() {
                                 pattern: {
                                     value: /^\d{3}-\d{3,4}-\d{4}$/,
                                     message:
-                                        "올바른 휴대폰 번호 형식이 아닙니다. (- 제외)",
+                                        "올바른 휴대폰 번호 형식이 아닙니다.",
                                 },
                             })}
-                            className={"h-[40px]"}
+                            className={"h-10"}
                         />
                     </div>
                     <div className={twMerge(["flex", "flex-col", "gap-2"])}>
@@ -174,7 +174,7 @@ function Register() {
                                 },
                             })}
                             error={errors.email}
-                            className={"h-[40px]"}
+                            className={"h-10"}
                         />
                     </div>
                     {errors.root && (

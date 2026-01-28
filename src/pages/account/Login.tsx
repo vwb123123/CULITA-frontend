@@ -25,7 +25,7 @@ function Login() {
             const response = await loginUser(data);
 
             // 사용자 정보를 저장
-            login(response.token, response.user);
+            login(response.data.token, response.data.user);
 
             alert("로그인 되었습니다.");
             navigate("/");
