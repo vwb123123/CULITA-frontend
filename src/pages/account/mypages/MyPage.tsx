@@ -8,7 +8,7 @@ const TABS = ["홈", "주문내역조회", "취소/교환/반품", "회원정보
 
 const MyPage = () => {
     const navigate = useNavigate();
-    const { isLoggedIn, user, logout } = useAuthStore();
+    const { isLoggedIn } = useAuthStore();
     const [activeTab, setActiveTab] = useState("홈");
 
     useEffect(() => {
@@ -75,7 +75,7 @@ const MyPage = () => {
 
             {/* 탭에 따른 컴포넌트 렌더링 */}
             {activeTab === "홈" ? (
-                <MyPageHome user={user} logout={logout} />
+                <MyPageHome />
             ) : (
                 /* 주문내역조회 및 기타 탭 뷰 */
                 <>

@@ -145,12 +145,12 @@ function Register() {
                             휴대전화 *
                         </span>
                         <Input
-                            placeholder={"휴대폰 번호(- 없이 입력)"}
+                            placeholder={"휴대폰 번호(- 포함 입력)"}
                             error={errors.phoneNumber}
                             registration={register("phoneNumber", {
                                 required: "휴대폰 번호는 필수값입니다.",
                                 pattern: {
-                                    value: /^01([0|1|6|7|8|9])?([0-9]{3,4})?([0-9]{4})$/,
+                                    value: /^\d{3}-\d{3,4}-\d{4}$/,
                                     message:
                                         "올바른 휴대폰 번호 형식이 아닙니다. (- 제외)",
                                 },

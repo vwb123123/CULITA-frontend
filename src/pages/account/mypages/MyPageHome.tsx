@@ -1,12 +1,9 @@
 import { twMerge } from "tailwind-merge";
-import type { User } from "../../../types/user.ts";
+import useAuthStore from "../../../store/useAuthStore.ts";
 
-interface MyPageHomeProps {
-    user: User | null;
-    logout: () => void;
-}
+const MyPageHome = () => {
+    const { user, logout } = useAuthStore();
 
-const MyPageHome = ({ user, logout }: MyPageHomeProps) => {
     return (
         <div
             className={twMerge([
@@ -37,7 +34,7 @@ const MyPageHome = ({ user, logout }: MyPageHomeProps) => {
                         <p className={twMerge(["text-lg", "font-light"])}>
                             안녕하세요{" "}
                             <span className="text-[#ff4600] font-medium">
-                                {user?.name || "이서연"}
+                                {user?.name || ""}
                             </span>
                             님, 회원님은{" "}
                             <span className="text-[#ff4600] font-medium">

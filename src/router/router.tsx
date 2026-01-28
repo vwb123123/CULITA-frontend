@@ -20,6 +20,10 @@ import CulitaCollaboration from "../pages/(film)/(filmDetailPages)/CulitaCollabo
 import CulitaEveryday from "../pages/(film)/(filmDetailPages)/CulitaEveryday.tsx";
 import CheersToMe from "../pages/(film)/(filmDetailPages)/CheersToMe.tsx";
 import CulitaSeason1 from "../pages/(film)/(filmDetailPages)/CulitaSeason1.tsx";
+import MayPresent from "../pages/(event)/(eventDetailPages)/MayPresent.tsx";
+import CulitasSeason3 from "../pages/(event)/(eventDetailPages)/CulitasSeason3.tsx";
+import CulitasSeason2 from "../pages/(event)/(eventDetailPages)/CulitasSeason2.tsx";
+import CulitasSeason1 from "../pages/(event)/(eventDetailPages)/CulitasSeason1.tsx";
 
 const router = createBrowserRouter([
     {
@@ -34,13 +38,25 @@ const router = createBrowserRouter([
             { path: "cart", element: <CartPage /> },
             { path: "shop", element: <ShopPage /> },
             { path: "brand", element: <BrandPage /> },
-            { path: "event", element: <EventPage /> },
+            {
+                path: "event",
+                children: [
+                    { index: true, element: <EventPage /> },
+                    { path: "event-list1", element: <MayPresent /> },
+                    { path: "event-list2", element: <CulitasSeason3 /> },
+                    { path: "event-list3", element: <CulitasSeason2 /> },
+                    { path: "event-list4", element: <CulitasSeason1 /> },
+                ],
+            },
 
             {
-                path: "/mypage",
+                path: "mypage",
                 element: <MyPage />,
                 children: [
-                    { index: true, element: <MyPageHome /> },
+                    {
+                        index: true,
+                        element: <MyPageHome />,
+                    },
                     { path: "order-history", element: <OrderHistory /> },
                     { path: "cancel-history", element: <CancelHistory /> },
                     { path: "profile", element: <UserInfo /> },
@@ -48,14 +64,16 @@ const router = createBrowserRouter([
             },
             {
                 path: "film",
-                element: <FilmPage />,
-            },
 
-            { path: "film/board_1", element: <CulitaSeason2 /> },
-            { path: "film/board_2", element: <CulitaCollaboration /> },
-            { path: "film/board_3", element: <CulitaSeason1 /> },
-            { path: "film/board_4", element: <CulitaEveryday /> },
-            { path: "film/board_5", element: <CheersToMe /> },
+                children: [
+                    { index: true, element: <FilmPage /> },
+                    { path: "board_1", element: <CulitaSeason2 /> },
+                    { path: "board_2", element: <CulitaCollaboration /> },
+                    { path: "board_3", element: <CulitaSeason1 /> },
+                    { path: "board_4", element: <CulitaEveryday /> },
+                    { path: "board_5", element: <CheersToMe /> },
+                ],
+            },
         ],
     },
 ]);
