@@ -13,7 +13,7 @@ interface MenuItem {
 }
 
 const MENU: MenuItem[] = [
-    { name: "SHOP", path: "/shop" },
+    { name: "SHOP", path: "/products" },
     { name: "BRAND", path: "/brand" },
     { name: "FILM", path: "/film" },
     { name: "EVENT", path: "/event" },

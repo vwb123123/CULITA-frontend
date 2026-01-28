@@ -13,7 +13,7 @@ function Footer() {
         >
             <div className={twMerge(["flex", "justify-center"])}>
                 <Link
-                    to={"/"}
+                    to={"/agreement"}
                     className={twMerge(
                         ["font-medium", "text-xs"],
                         ["mx-5", "relative", "underline"],
@@ -22,7 +22,7 @@ function Footer() {
                     Agreement
                 </Link>
                 <Link
-                    to={"/"}
+                    to={"/privacy-policy"}
                     className={twMerge(
                         ["font-medium", "text-xs"],
                         ["mx-5", "relative", "underline"],
@@ -31,7 +31,7 @@ function Footer() {
                     Privacy policy
                 </Link>
                 <Link
-                    to={"/"}
+                    to={"/brand"}
                     className={twMerge(
                         ["font-medium", "text-xs"],
                         ["mx-5", "relative", "underline"],

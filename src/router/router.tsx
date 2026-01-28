@@ -7,7 +7,7 @@ import FaQ from "../pages/account/FaQ.tsx";
 import CheckOrder from "../pages/account/CheckOrder.tsx";
 import MyPage from "../pages/account/mypages/MyPage.tsx";
 import CartPage from "../pages/(shop)/CartPage.tsx";
-import ShopPage from "../pages/(shop)/ShopPage.tsx";
+import ProductListPage from "../pages/(shop)/ProductListPage.tsx";
 import BrandPage from "../pages/(brand)/BrandPage.tsx";
 import FilmPage from "../pages/(film)/FilmPage.tsx";
 import EventPage from "../pages/(event)/EventPage.tsx";
@@ -35,6 +35,8 @@ import AdminCategoryEdit from "../pages/(admin)/categories/AdminCategoryEdit.tsx
 import AdminProductList from "../pages/(admin)/products/AdminProductList.tsx";
 import AdminProductCreate from "../pages/(admin)/products/AdminProductCreate.tsx";
 import AdminProductEdit from "../pages/(admin)/products/AdminProductEdit.tsx";
+import Agreement from "../components/layout/footerLinks/Agreement.tsx";
+import Privacy from "../components/layout/footerLinks/Privacy.tsx";
 
 export const adminOnlyLoader = () => {
     const { isLoggedIn, user } = useAuthStore.getState();
@@ -57,13 +59,20 @@ const router = createBrowserRouter([
         element: <Layout />,
         children: [
             { index: true, element: <Home /> },
-            { path: "login", element: <Login /> },
-            { path: "register", element: <Register /> },
-            { path: "check-order", element: <CheckOrder /> },
-            { path: "faq", element: <FaQ /> },
-            { path: "cart", element: <CartPage /> },
-            { path: "shop", element: <ShopPage /> },
+            { path: "products", element: <ProductListPage /> },
             { path: "brand", element: <BrandPage /> },
+            {
+                path: "film",
+
+                children: [
+                    { index: true, element: <FilmPage /> },
+                    { path: "board_1", element: <CulitaSeason2 /> },
+                    { path: "board_2", element: <CulitaCollaboration /> },
+                    { path: "board_3", element: <CulitaSeason1 /> },
+                    { path: "board_4", element: <CulitaEveryday /> },
+                    { path: "board_5", element: <CheersToMe /> },
+                ],
+            },
             {
                 path: "event",
                 children: [
@@ -74,6 +83,11 @@ const router = createBrowserRouter([
                     { path: "event-list4", element: <CulitasSeason1 /> },
                 ],
             },
+            { path: "login", element: <Login /> },
+            { path: "register", element: <Register /> },
+            { path: "check-order", element: <CheckOrder /> },
+            { path: "faq", element: <FaQ /> },
+            { path: "cart", element: <CartPage /> },
 
             {
                 path: "mypage",
@@ -88,18 +102,8 @@ const router = createBrowserRouter([
                     { path: "profile", element: <UserInfo /> },
                 ],
             },
-            {
-                path: "film",
-
-                children: [
-                    { index: true, element: <FilmPage /> },
-                    { path: "board_1", element: <CulitaSeason2 /> },
-                    { path: "board_2", element: <CulitaCollaboration /> },
-                    { path: "board_3", element: <CulitaSeason1 /> },
-                    { path: "board_4", element: <CulitaEveryday /> },
-                    { path: "board_5", element: <CheersToMe /> },
-                ],
-            },
+            { path: "agreement", element: <Agreement /> },
+            { path: "privacy-policy", element: <Privacy /> },
         ],
     },
     {
