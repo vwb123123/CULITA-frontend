@@ -54,17 +54,6 @@ const MyPageHome = () => {
                             로그아웃
                         </button>
                     </div>
-                    <button
-                        className={twMerge([
-                            "border",
-                            "border-gray-200",
-                            "text-[11px]",
-                            "px-3",
-                            "py-1",
-                        ])}
-                    >
-                        회원 혜택
-                    </button>
                 </div>
                 <div
                     className={twMerge([

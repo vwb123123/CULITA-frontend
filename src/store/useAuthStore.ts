@@ -13,7 +13,7 @@ interface AuthState {
 const useAuthStore = create<AuthState>()(
     persist(
         (set) => ({
-            isLoggedIn: true,
+            isLoggedIn: false,
             token: null,
             user: null,
             login: (token: string, user: User) =>

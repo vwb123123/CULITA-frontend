@@ -110,7 +110,7 @@ function Header() {
                             className={twMerge(
                                 ["hidden", "lg:flex", "flex"],
                                 ["items-center", "h-full", "text-[16.5px]"],
-                                ["font-normal", "gap-8"],
+                                ["font-medium", "gap-8"],
                             )}
                         >
                             {/* 메뉴 구성 */}
@@ -128,6 +128,11 @@ function Header() {
                                             "relative",
                                             "py-5",
                                         ])}
+                                        onClick={() => {
+                                            requestAnimationFrame(() => {
+                                                window.scrollTo({ top: 0 });
+                                            });
+                                        }}
                                     >
                                         {menu.name}
                                     </Link>
@@ -141,30 +146,22 @@ function Header() {
                 <div className={twMerge(["flex", "items-center", "gap-8"])}>
                     {/* ACCOUNT 부분 */}
                     <div
-                        className={twMerge([
-                            "relative",
-                            "h-[70px]",
-                            "flex",
-                            "items-center",
-                        ])}
+                        className={twMerge(
+                            ["relative", "h-[70px]"],
+                            ["flex", "items-center"],
+                            ["cursor-pointer", "font-medium"],
+                        )}
                         onMouseEnter={() => setIsAccountMenuHovered(true)}
                         onMouseLeave={() => setIsAccountMenuHovered(false)}
                     >
-                        <span
-                            className={twMerge(
-                                ["cursor-pointer", "font-semibold"],
-                                ["z-10"],
-                            )}
-                        >
-                            ACCOUNT
-                        </span>
+                        <span className={twMerge(["z-10"])}>ACCOUNT</span>
                     </div>
 
                     {/* 장바구니 부분 */}
                     <div className="h-[70px] flex items-center">
                         <Link
                             to={"/cart"}
-                            className="cursor-pointer font-semibold"
+                            className="cursor-pointer font-medium"
                         >
                             CART({cartItemsCount})
                         </Link>
