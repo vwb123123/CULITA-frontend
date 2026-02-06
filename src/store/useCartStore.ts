@@ -64,7 +64,6 @@ const useCartStore = create<CartState>()(
                 if (quantity < 1) return;
 
                 const prevItems = get().items;
-
                 set({
                     items: prevItems.map((item) =>
                         item.id === itemId
@@ -82,7 +81,7 @@ const useCartStore = create<CartState>()(
                     await get().fetchCart();
                 } catch (e) {
                     set({ items: prevItems });
-                    console.log("수량 변경 실패", e);
+                    console.log("장바구니 수량 변경 실패", e);
                 }
             },
 
@@ -105,7 +104,12 @@ const useCartStore = create<CartState>()(
             getTotalCount: () =>
                 get().items.reduce((total, item) => total + item.quantity, 0),
 
-            getTotalPrice: () => get().cartTotal,
+            getTotalPrice: () => {
+                const total = get().getTotalPrice();
+                if (total === 0) return 0;
+                const shippingFee = total >= 30000 ? 0 : 3000;
+                return total + shippingFee;
+            },
         }),
         {
             name: "cart-storage",

@@ -27,7 +27,7 @@ function ProductCard({ product }: ProductCardProps) {
                                     : product.thumbnail
                             }
                             alt={product.name}
-                            className="w-full transition-all duration-200"
+                            className="w-full transition-all duration-300"
                         />
                     )}
                     {/* 뱃지 영역 */}

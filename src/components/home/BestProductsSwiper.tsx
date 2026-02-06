@@ -62,7 +62,7 @@ function BestProductsSwiper() {
 
     return (
         <section className="py-20 relative">
-            {/* Navigation 버튼들 - Swiper 외부로 이동 */}
+            {/* Navigation 버튼들 */}
             <button
                 className={twMerge([
                     "custom-prev",

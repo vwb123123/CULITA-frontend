@@ -37,6 +37,7 @@ import AdminProductCreate from "../pages/(admin)/products/AdminProductCreate.tsx
 import AdminProductEdit from "../pages/(admin)/products/AdminProductEdit.tsx";
 import Agreement from "../components/layout/footerLinks/Agreement.tsx";
 import Privacy from "../components/layout/footerLinks/Privacy.tsx";
+import ProductDetailPage from "../pages/(shop)/ProductDetailPage.tsx";
 
 export const adminOnlyLoader = () => {
     const { isLoggedIn, user } = useAuthStore.getState();
@@ -60,6 +61,7 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Home /> },
             { path: "products", element: <ProductListPage /> },
+            { path: "products/:id", element: <ProductDetailPage /> },
             { path: "brand", element: <BrandPage /> },
             {
                 path: "film",

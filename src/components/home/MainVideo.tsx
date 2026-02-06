@@ -11,7 +11,7 @@ function MainVideo() {
                 playsInline
                 className={twMerge(
                     ["absolute", "top-0", "left-0"],
-                    ["w-full", "h-full", ""],
+                    ["w-full", "h-full"],
                     ["will-change-transform"],
                 )}
             >

@@ -53,3 +53,26 @@ image {
 .swiper-button-next::before {
     transform: translate(-50%, -50%) rotate(45deg);
 }
+
+{/* 상품 상세 페이지 애니메이션 */}
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+.animate-marquee-img {
+    display: flex;
+    flex-shrink: 0;
+    animation: marquee 20s linear infinite;
+}
+
+{/* 상품 상세 페이지 배너 슬라이드 */}
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.slide-img {
+    display: flex;
+    animation: marquee 20s linear infinite;
+}

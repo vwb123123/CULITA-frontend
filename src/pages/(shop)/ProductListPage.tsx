@@ -2,24 +2,58 @@ import { twMerge } from "tailwind-merge";
 import { useEffect, useMemo, useState } from "react";
 import ProductCard from "../../components/shop/ProductCard.tsx";
 import type { ProductListItem } from "../../types/product.ts";
-import { fetchProducts } from "../../api/product.api.ts";
 import shopCenterItem from "../../assets/SHOP Page/ShopCenterItem.jpg";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { getCategoryByPath } from "../../api/category.api.ts";
+import { fetchProducts } from "../../api/product.api.ts";
+import { useSearchParams } from "react-router";
 
 type ListSlot =
     | { type: "product"; product: ProductListItem }
     | { type: "banner"; imageUrl: string };
 
-const TABS = ["ALL", "GIFT SET", "MOUTHWASH", "GOODS"];
+const TABS = [
+    { name: "ALL", path: "all" },
+    { name: "GIFT SET", path: "gift-set" },
+    { name: "MOUTHWASH", path: "mouthwash" },
+    { name: "GOODS", path: "goods" },
+];
 
 function ProductListPage() {
-    const [activeTab, setActiveTab] = useState("ALL");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const categoryParam = searchParams.get("category") || "all";
+
+    const activeTab = useMemo(() => {
+        return TABS.find((tab) => tab.path === categoryParam) || TABS[0];
+    }, [categoryParam]);
 
     const [products, setProducts] = useState<ProductListItem[]>([]);
+
+    const handleTabChange = (tabPath: string) => {
+        if (tabPath === "all") {
+            searchParams.delete("category");
+        } else {
+            searchParams.set("category", tabPath);
+        }
+        setSearchParams(searchParams);
+    };
 
     useEffect(() => {
         const loadData = async () => {
             try {
-                const res = await fetchProducts({ limit: 20 });
+                let categoryId: number | undefined = undefined;
+
+                if (activeTab.path !== "all") {
+                    const categoryData = await getCategoryByPath(
+                        activeTab.path,
+                    );
+                    categoryId = categoryData.category.id;
+                }
+
+                const res = await fetchProducts({
+                    limit: 20,
+                    categoryId: categoryId,
+                });
                 setProducts(res.data);
             } catch (e) {
                 console.log("데이터를 가져오는데 실패했습니다.", e);
@@ -28,11 +62,9 @@ function ProductListPage() {
         loadData().then(() => {});
     }, [activeTab]);
 
-    const slots = useMemo((): ListSlot[] => {
+    const slots = useMemo(() => {
         if (products.length === 0) return [];
-
         const result: ListSlot[] = [];
-
         const reversedProducts = [...products].reverse();
 
         reversedProducts.forEach((item, index) => {
@@ -59,8 +91,8 @@ function ProductListPage() {
                 >
                     {TABS.map((tab) => (
                         <li
-                            key={tab}
-                            onClick={() => setActiveTab(tab)}
+                            key={tab.path}
+                            onClick={() => handleTabChange(tab.path)}
                             className={twMerge(
                                 ["text-[15px]", "text-center"],
                                 ["mr-2.5", "py-3", "px-[25px]"],
@@ -76,7 +108,7 @@ function ProductListPage() {
                                     : ["bg-[#F2F2F2]"],
                             )}
                         >
-                            {tab}
+                            {tab.name}
                         </li>
                     ))}
                 </ul>
@@ -108,6 +140,24 @@ function ProductListPage() {
                     }
                     return null;
                 })}
+            </div>
+            <div
+                className={twMerge(
+                    ["w-fit", "flex", "px-[38px]"],
+                    ["mt-[50px]", "mx-auto", "items-center"],
+                )}
+            >
+                <MdKeyboardArrowLeft
+                    className={twMerge(["cursor-pointer text-[#757575]"])}
+                    size={20}
+                />
+                <ol className={"pt-0.5 px-2"}>
+                    <li className={"text-black"}>1</li>
+                </ol>
+                <MdKeyboardArrowRight
+                    size={20}
+                    className={twMerge(["cursor-pointer text-[#757575]"])}
+                />
             </div>
         </div>
     );

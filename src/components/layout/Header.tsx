@@ -17,7 +17,7 @@ const MENU: MenuItem[] = [
     { name: "BRAND", path: "/brand" },
     { name: "FILM", path: "/film" },
     { name: "EVENT", path: "/event" },
-    { name: "GIFT", path: "/gift" },
+    { name: "GIFT", path: "/products?category=gift-set" },
 ];
 
 const ACCOUNT_MENU_LOGOUT: MenuItem[] = [
@@ -151,6 +151,11 @@ function Header() {
                             ["flex", "items-center"],
                             ["cursor-pointer", "font-medium"],
                         )}
+                        onClick={() => {
+                            requestAnimationFrame(() => {
+                                window.scrollTo({ top: 0 });
+                            });
+                        }}
                         onMouseEnter={() => setIsAccountMenuHovered(true)}
                         onMouseLeave={() => setIsAccountMenuHovered(false)}
                     >
@@ -162,6 +167,11 @@ function Header() {
                         <Link
                             to={"/cart"}
                             className="cursor-pointer font-medium"
+                            onClick={() => {
+                                requestAnimationFrame(() => {
+                                    window.scrollTo({ top: 0 });
+                                });
+                            }}
                         >
                             CART({cartItemsCount})
                         </Link>
@@ -191,7 +201,10 @@ function Header() {
                                 <Link
                                     key={item.name}
                                     to={item.path}
-                                    onClick={(e) => handleMenuClick(item, e)}
+                                    onClick={(e) => {
+                                        handleMenuClick(item, e);
+                                        window.scrollTo({ top: 0 });
+                                    }}
                                     className={twMerge([
                                         "block",
                                         "px-7",
