@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import { AxiosError } from "axios";
-import type { LoginFormType } from "../../types/user.ts";
+import type { LoginFormType } from "../../types/auth.ts";
 import { loginUser } from "../../api/auth.api.ts";
 import Input from "../../components/common/Input.tsx";
 import Button from "../../components/common/Button.tsx";
@@ -24,8 +24,7 @@ function Login() {
         try {
             const response = await loginUser(data);
 
-            // 사용자 정보를 저장
-            login(response.data.token, response.data.user);
+            login(response.data.token || "", response.data.user);
 
             alert("로그인 되었습니다.");
             navigate("/");

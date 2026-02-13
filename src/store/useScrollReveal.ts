@@ -11,7 +11,7 @@ export function useScrollReveal() {
             ([entry]) => {
                 if (entry.isIntersecting) {
                     setIsVisible(true);
-                    observer.disconnect(); // 한 번만 실행
+                    observer.disconnect();
                 }
             },
             {

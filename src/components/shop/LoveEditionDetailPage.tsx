@@ -5,6 +5,7 @@ import artist from "../../assets/SHOP Page/LoveEdition page/graflex.png";
 import Sunset from "../../assets/SHOP Page/LoveEdition page/sunset romance_web.jpg";
 import giftset from "../../assets/SHOP Page/LoveEdition page/packageSet.png";
 import MainBanner from "../../assets/SHOP Page/LoveEdition page/banner.jpg";
+import ScrollReveal from "../common/ScrollReveal.tsx";
 
 function LoveEditionDetailPage() {
     return (
@@ -247,115 +248,121 @@ function LoveEditionDetailPage() {
                 </div>
             </div>
             <div className={"relative mt-50"}>
-                <p
-                    data-aos="fade-up"
-                    data-aos-delay="300"
-                    className={twMerge(
-                        ["font-medium", "text-8xl"],
-                        ["leading-[100%]", "text-center"],
-                    )}
-                >
-                    LOVE Edition Mouthwash
-                </p>
-                <span
-                    data-aos="fade-up"
-                    data-aos-delay="300"
-                    className={twMerge(
-                        ["block", "mt-[14px]", "font-bold"],
-                        ["text-[32px]", "leading-[100%]", "text-center"],
-                    )}
-                >
-                    러브 에디션 마우스워시 선물세트
-                </span>
+                <ScrollReveal delay={300}>
+                    <p
+                        className={twMerge(
+                            ["font-medium", "text-8xl"],
+                            ["leading-[100%]", "text-center"],
+                        )}
+                    >
+                        LOVE Edition Mouthwash
+                    </p>
+                </ScrollReveal>
+                <ScrollReveal delay={300}>
+                    <span
+                        className={twMerge(
+                            ["block", "mt-[14px]", "font-bold"],
+                            ["text-[32px]", "leading-[100%]", "text-center"],
+                        )}
+                    >
+                        러브 에디션 마우스워시 선물세트
+                    </span>
+                </ScrollReveal>
                 <div
-                    data-aos="fade-up"
-                    data-aos-delay="100"
                     className={twMerge(
                         ["relative", "flex", "items-center"],
                         ["justify-center", "w-[1400px]"],
                         ["py-20", "px-6", "mt-[90px]", "mx-auto"],
                     )}
                 >
-                    <img
-                        src={giftset}
-                        alt="gift-set"
-                        className={twMerge(["w-[516px]"])}
-                    />
+                    <ScrollReveal delay={300}>
+                        <img
+                            src={giftset}
+                            alt="gift-set"
+                            className={twMerge(["w-[516px]"])}
+                        />
+                    </ScrollReveal>
                     <div className={"left-0 top-0 absolute"}>
-                        <p
-                            className={twMerge([
-                                "text-[44px]",
-                                "font-semibold",
-                            ])}
-                        >
-                            특별한 향기로
-                            <br /> 시작하는 당신의 일상
-                        </p>
-                        <span
-                            className={twMerge(
-                                ["text-[15px]", "leading-[24px]"],
-                                ["block", "mt-5"],
-                            )}
-                        >
-                            쿨리타의 세련된 향기로 하루를 시작해보세요. 아침
-                            일과를
-                            <br />
-                            더욱 특별하게 만들어 주며 마음의 여유를 가져다
-                            줍니다.
-                            <br />
-                            기분 좋은 향기가 당신의 하루를 돋보이게 만들
-                            것입니다.
-                        </span>
+                        <ScrollReveal delay={300}>
+                            <p
+                                className={twMerge([
+                                    "text-[44px]",
+                                    "font-semibold",
+                                ])}
+                            >
+                                특별한 향기로
+                                <br /> 시작하는 당신의 일상
+                            </p>
+                            <span
+                                className={twMerge(
+                                    ["text-[15px]", "leading-[24px]"],
+                                    ["block", "mt-5"],
+                                )}
+                            >
+                                쿨리타의 세련된 향기로 하루를 시작해보세요. 아침
+                                일과를
+                                <br />
+                                더욱 특별하게 만들어 주며 마음의 여유를 가져다
+                                줍니다.
+                                <br />
+                                기분 좋은 향기가 당신의 하루를 돋보이게 만들
+                                것입니다.
+                            </span>
+                        </ScrollReveal>
                     </div>
                     <div className={"left-0 bottom-0 absolute"}>
-                        <p
-                            className={twMerge([
-                                "text-[44px]",
-                                "font-semibold",
-                            ])}
-                        >
-                            행복한 순간을
-                            <br /> 만들기 위한 최상의 선택
-                        </p>
-                        <span
-                            className={twMerge(
-                                ["text-[15px]", "leading-[24px]"],
-                                ["block", "mt-5"],
-                            )}
-                        >
-                            쿨리타에게 마우스워시는 단순한 생활 용품이 아닌
-                            특별한 순간을
-                            <br />
-                            더욱 빛내 줄 완벽한 파트너입니다. 우리는 우아함과
-                            감동을 추구하는
-                            <br />
-                            사람들에게 완벽한 선물이 될 것입니다.
-                        </span>
+                        <ScrollReveal delay={300}>
+                            <p
+                                className={twMerge([
+                                    "text-[44px]",
+                                    "font-semibold",
+                                ])}
+                            >
+                                행복한 순간을
+                                <br /> 만들기 위한 최상의 선택
+                            </p>
+                            <span
+                                className={twMerge(
+                                    ["text-[15px]", "leading-[24px]"],
+                                    ["block", "mt-5"],
+                                )}
+                            >
+                                쿨리타에게 마우스워시는 단순한 생활 용품이 아닌
+                                특별한 순간을
+                                <br />
+                                더욱 빛내 줄 완벽한 파트너입니다. 우리는
+                                우아함과 감동을 추구하는
+                                <br />
+                                사람들에게 완벽한 선물이 될 것입니다.
+                            </span>
+                        </ScrollReveal>
                     </div>
                     <div className={"ml-240 top-1/2 absolute"}>
-                        <p
-                            className={twMerge([
-                                "text-[44px]",
-                                "font-semibold",
-                            ])}
-                        >
-                            소믈리에가 엄선한
-                            <br /> 최적의 맛과 향
-                        </p>
-                        <p
-                            className={twMerge(
-                                ["text-[15px]", "leading-[24px]"],
-                                ["block", "mt-5"],
-                            )}
-                        >
-                            쿨리타 마우스워시는 워터 소믈리에의 세심한
-                            테이스팅을 통해 최상의
-                            <br />
-                            맛과 품질을 구현합니다. 균형잡힌 저알코올 함량으로
-                            부드러운 사용감
-                            <br />과 은은한 향이 오랫동안 지속되며 입에 감기는
-                            깊은 맛이 당신을 매료시킬 것입니다
-                        </p>
+                        <ScrollReveal delay={300}>
+                            <p
+                                className={twMerge([
+                                    "text-[44px]",
+                                    "font-semibold",
+                                ])}
+                            >
+                                소믈리에가 엄선한
+                                <br /> 최적의 맛과 향
+                            </p>
+                            <p
+                                className={twMerge(
+                                    ["text-[15px]", "leading-[24px]"],
+                                    ["block", "mt-5"],
+                                )}
+                            >
+                                쿨리타 마우스워시는 워터 소믈리에의 세심한
+                                테이스팅을 통해 최상의
+                                <br />
+                                맛과 품질을 구현합니다. 균형잡힌 저알코올
+                                함량으로 부드러운 사용감
+                                <br />과 은은한 향이 오랫동안 지속되며 입에
+                                감기는 깊은 맛이 당신을 매료시킬 것입니다
+                            </p>
+                        </ScrollReveal>
                     </div>
                 </div>
             </div>

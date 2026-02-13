@@ -21,6 +21,8 @@ import ProductFeatureSwiper from "../../components/shop/ProductFeatureSwiper.tsx
 import ProductEffectStats from "../../components/shop/ProductEffectStats.tsx";
 import ProductFaQ from "../../components/shop/ProductFaQ.tsx";
 import ProductInfoSection from "../../components/shop/ProductInfoSection.tsx";
+import ProductReviewSection from "../../components/shop/ProductReviewSection.tsx";
+import ScrollReveal from "../../components/common/ScrollReveal.tsx";
 
 function ProductDetailPage() {
     const { id } = useParams();
@@ -133,6 +135,27 @@ function ProductDetailPage() {
         }
     };
 
+    useEffect(() => {
+        if (window.location.hash === "#review") {
+            const timer = setTimeout(() => {
+                const element = document.getElementById("review");
+                if (element) {
+                    const headerOffset = 100;
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const offsetPosition =
+                        elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth",
+                    });
+                }
+            }, 500);
+
+            return () => clearTimeout(timer);
+        }
+    }, [product]);
+
     if (loading) return <Spinner full />;
     if (!product)
         return (
@@ -141,7 +164,6 @@ function ProductDetailPage() {
             </div>
         );
 
-    // 카테고리 관련
     const bothCategory =
         product.category.name === "GIFT SET" ||
         product.category.name === "MOUTHWASH";
@@ -150,18 +172,15 @@ function ProductDetailPage() {
     const mouthwashCategory = product.category.name === "MOUTHWASH";
     const goodsCategory = product.category.name === "GOODS";
 
-    // 상품명으로 향 정보 가져오기
     const scentInfo = getScentByProductName(product.name);
 
     return (
         <div className="mt-[82px]">
             <div className="w-full flex items-start">
-                {/* 이미지 갤러리 영역 */}
                 <div className="w-[calc(1200/1920*100vw)]">
                     <ProductImageGallery product={product} />
                 </div>
 
-                {/* 상품 정보 영역 (Sticky) */}
                 <div
                     className={twMerge(
                         ["w-[calc(400/1920*100vw)]"],
@@ -180,17 +199,28 @@ function ProductDetailPage() {
                         <div className={"pb-5"}>
                             <div className={"pb-5"}>
                                 {product.isBest && (
-                                    <span className="bg-[#b3e8bc] text-gray-800 text-xs px-3 py-1 rounded-[5px]">
+                                    <span
+                                        className={twMerge(
+                                            ["bg-[#b3e8bc]", "text-gray-800"],
+                                            ["text-xs", " rounded-[5px]"],
+                                            ["px-3", "py-1"],
+                                        )}
+                                    >
                                         Best
                                     </span>
                                 )}
                                 {product.isNew && (
-                                    <span className="bg-[#e3c7ff] text-gray-800 text-xs px-3 py-1 rounded-[5px]">
+                                    <span
+                                        className={twMerge(
+                                            ["bg-[#e3c7ff]", "text-gray-800"],
+                                            ["text-xs", " rounded-[5px]"],
+                                            ["px-3", "py-1"],
+                                        )}
+                                    >
                                         New
                                     </span>
                                 )}
                             </div>
-                            {/* 상품명 */}
                             <h2
                                 className={twMerge([
                                     "text-[26px]",
@@ -202,28 +232,24 @@ function ProductDetailPage() {
                                 {product.name}
                             </h2>
 
-                            {/* 가격 */}
                             <div className="mt-5 mb-5">
                                 <p className="text-xl font-semibold leading-5">
                                     KRW {product.price.toLocaleString()}
                                 </p>
                             </div>
 
-                            {/* 향 정보 - GIFT SET과 MOUTHWASH 카테고리만 표시 */}
                             {bothCategory && scentInfo && (
                                 <div className="mb-2">
                                     <p className="text-sm">{scentInfo}</p>
                                 </div>
                             )}
 
-                            {/* 상품 설명 */}
                             {product.description && (
                                 <div className="text-sm leading-[22px] mt-2.5">
                                     <p>{product.description}</p>
                                 </div>
                             )}
 
-                            {/* 배송 정보 */}
                             <div
                                 className={twMerge(
                                     ["text-sm", "text-[#666]"],
@@ -239,7 +265,6 @@ function ProductDetailPage() {
                                 </p>
                             </div>
                         </div>
-                        {/* 수량 선택 */}
                         <div className="mt-5 flex items-center">
                             <div
                                 className={twMerge(
@@ -260,19 +285,39 @@ function ProductDetailPage() {
                             >
                                 <button
                                     onClick={decrementQuantity}
-                                    className="w-6 h-6 flex items-center justify-center hover:bg-gray-100 transition-colors"
+                                    className={twMerge(
+                                        ["w-6", "h-6", "flex"],
+                                        ["items-center", "justify-center"],
+                                        [
+                                            "hover:bg-gray-100",
+                                            "transition-colors",
+                                        ],
+                                    )}
                                     disabled={quantity <= 1}
                                 >
                                     <span className="text-xs">−</span>
                                 </button>
-                                <div className="flex-1 h-6 flex items-center justify-center border-x border-gray-300">
+                                <div
+                                    className={twMerge(
+                                        ["h-6", "flex-1", "flex"],
+                                        ["items-center", "justify-center"],
+                                        ["border-gray-300", "border-x"],
+                                    )}
+                                >
                                     <span className="font-medium">
                                         {quantity}
                                     </span>
                                 </div>
                                 <button
                                     onClick={incrementQuantity}
-                                    className="w-6 h-6 flex items-center justify-center hover:bg-gray-100 transition-colors"
+                                    className={twMerge(
+                                        ["w-6", "h-6", "flex"],
+                                        ["items-center", "justify-center"],
+                                        [
+                                            "hover:bg-gray-100",
+                                            "transition-colors",
+                                        ],
+                                    )}
                                     disabled={quantity >= product.stock}
                                 >
                                     <span className="text-xs">+</span>
@@ -289,8 +334,12 @@ function ProductDetailPage() {
                             </div>
                         </div>
 
-                        {/* 총 금액 */}
-                        <div className="flex justify-between items-center pt-4 pb-6 border-b">
+                        <div
+                            className={twMerge(
+                                ["pt-4", "pb-6", "flex", "border-b"],
+                                ["items-center", "justify-between"],
+                            )}
+                        >
                             <span className="text-lg font-medium">
                                 총 상품금액
                             </span>
@@ -300,7 +349,6 @@ function ProductDetailPage() {
                             </span>
                         </div>
 
-                        {/* 구매 버튼들 */}
                         <div className="space-y-3 pt-4">
                             <button
                                 onClick={handleBuyNow}
@@ -458,14 +506,16 @@ function ProductDetailPage() {
             <div>
                 {bothCategory ? (
                     <div>
-                        <p
-                            className={twMerge(
-                                ["mt-45", "mb-15", "font-medium"],
-                                ["text-center", "text-[80px]"],
-                            )}
-                        >
-                            소믈리에와 함께 맛과 향을 디자인했습니다.
-                        </p>
+                        <ScrollReveal delay={300}>
+                            <p
+                                className={twMerge(
+                                    ["mt-45", "mb-15", "font-medium"],
+                                    ["text-center", "text-[80px]"],
+                                )}
+                            >
+                                소믈리에와 함께 맛과 향을 디자인했습니다.
+                            </p>
+                        </ScrollReveal>
                         <div className={twMerge(["flex", "h-auto", "px-10"])}>
                             <ProductFeatureSwiper />
                         </div>
@@ -483,12 +533,8 @@ function ProductDetailPage() {
                     <div
                         className={twMerge(
                             ["mt-10", "py-30", "px-10", "bg-[#F5F5F3]"],
-                            [
-                                "w-[calc(100%-80px)]",
-                                "ml-10",
-                                "rounded-[20px]",
-                                "mb-5",
-                            ],
+                            ["w-[calc(100%-80px)]", "ml-10"],
+                            ["rounded-[20px]", "mb-5"],
                         )}
                     >
                         <div className={twMerge(["max-w-[1280px]", "mx-auto"])}>
@@ -503,13 +549,10 @@ function ProductDetailPage() {
                             <div className={"border-t border-black"}>
                                 <div className={"flex"}>
                                     <div
-                                        className={twMerge([
-                                            "flex",
-                                            "py-10",
-                                            "w-full",
-                                            "border-b",
-                                            "border-[#B2B2B2]",
-                                        ])}
+                                        className={twMerge(
+                                            ["flex", "py-10", "w-full"],
+                                            ["border-b", "border-[#B2B2B2]"],
+                                        )}
                                     >
                                         <dt
                                             className={twMerge(
@@ -527,7 +570,9 @@ function ProductDetailPage() {
                     </div>
                 )}
             </div>
-            <div></div>
+            <div>
+                <ProductReviewSection productId={product.id} />
+            </div>
         </div>
     );
 }
@@ -579,12 +624,10 @@ function Accordion({
                 )}
             >
                 <div
-                    className={twMerge([
-                        "pb-4",
-                        "pt-2",
-                        "text-sm",
-                        "text-gray-600",
-                    ])}
+                    className={twMerge(
+                        ["pb-4", "pt-2"],
+                        ["text-sm", "text-gray-600"],
+                    )}
                 >
                     {children}
                 </div>

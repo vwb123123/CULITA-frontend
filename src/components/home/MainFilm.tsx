@@ -1,5 +1,4 @@
 import { twMerge } from "tailwind-merge";
-import { useScrollReveal } from "../../store/useScrollReveal.ts";
 import { motion, type Variants } from "framer-motion";
 import mainFilm1 from "../../assets/mainPage/MainFilm.jpg";
 import mainFilm2 from "../../assets/mainPage/MainFilm2.jpg";
@@ -15,6 +14,7 @@ import mainFilm11 from "../../assets/mainPage/MainFilm11.jpg";
 import mainFilm12 from "../../assets/mainPage/MainFilm12.jpg";
 import ForCulita from "../../assets/mainPage/for-me-culita.svg";
 import { Link } from "react-router";
+import ScrollReveal from "../common/ScrollReveal.tsx";
 
 const FILM_PHOTO = [
     { image: mainFilm1 },
@@ -57,43 +57,34 @@ const itemVariants: Variants = {
 };
 
 function MainFilm() {
-    const { ref, isVisible } = useScrollReveal();
-
     return (
         <>
             <section>
-                <p
-                    ref={ref}
-                    className={twMerge(
-                        ["text-[calc(80/1920*100vw)]"],
-                        ["font-medium", "text-center"],
-                        ["w-full", "ease-out", "mt-[160px]"],
-                        ["transition-all", "duration-600"],
-                        ["will-change-transform", "delay-200"],
-                        isVisible
-                            ? ["opacity-100", "translate-y-0"]
-                            : ["opacity-0", "translate-y-[117%]"],
-                    )}
-                >
-                    CULITAS Film
-                </p>
-                <p
-                    className={twMerge(
-                        ["text-xs", "mt-[15px]", "text-center"],
-                        ["leading-5", "tracking-[0.5px]"],
-                        ["w-full", "ease-out", "mt-2"],
-                        ["transition-all", "duration-600"],
-                        ["will-change-transform", "delay-200"],
-                        isVisible
-                            ? ["opacity-100", "translate-y-0"]
-                            : ["opacity-0", "translate-y-[117%]"],
-                    )}
-                >
-                    쿨리타와 함께하는 시간은 마치 선물 같습니다.
-                    <br />
-                    일상의 특별한 순간들을 태그해 주세요 <br />
-                    “Cheers to me!”와 함께 새로운 나의 일상을 기념해요!
-                </p>
+                <ScrollReveal delay={300}>
+                    <p
+                        className={twMerge(
+                            ["text-[calc(80/1920*100vw)]"],
+                            ["font-medium", "text-center"],
+                            ["w-full", "mt-[160px]"],
+                        )}
+                    >
+                        CULITAS Film
+                    </p>
+                </ScrollReveal>
+                <ScrollReveal delay={300}>
+                    <p
+                        className={twMerge(
+                            ["text-xs", "mt-[15px]", "text-center"],
+                            ["leading-5", "tracking-[0.5px]"],
+                            ["w-full", "mt-2"],
+                        )}
+                    >
+                        쿨리타와 함께하는 시간은 마치 선물 같습니다.
+                        <br />
+                        일상의 특별한 순간들을 태그해 주세요 <br />
+                        “Cheers to me!”와 함께 새로운 나의 일상을 기념해요!
+                    </p>
+                </ScrollReveal>
                 <div className="mt-15 w-full px-4">
                     <motion.ul
                         variants={containerVariants}
@@ -140,48 +131,42 @@ function MainFilm() {
                         ["inline-block"],
                     )}
                 />
-                <p
-                    className={twMerge(
-                        ["text-[15px]", "mt-[15px]"],
-                        ["tracking-[0.5px]"],
-                        ["w-full", "ease-out"],
-                        ["text-center", "text-[#ff4600]"],
-                        ["transition-all", "duration-600"],
-                        ["will-change-transform", "delay-200"],
-                        isVisible
-                            ? ["opacity-100", "translate-y-0"]
-                            : ["opacity-0", "translate-y-[117%]"],
-                    )}
-                >
-                    새로운 일상과 설레는 첫 만남, 쿨리타로 경험해보세요
-                </p>
-                <span className={twMerge(["mt-15", "py-[15px]"])}>
-                    <Link
-                        to={"/shop"}
+                <ScrollReveal delay={300}>
+                    <p
                         className={twMerge(
-                            ["relative"],
-                            ["flex", "justify-center", "items-center"],
-                            ["mx-auto", "my-[10px]"],
-                            ["h-10", "w-[174px]"],
-                            ["rounded-[100px]"],
-                            ["font-medium", "text-center", "text-white"],
-                            ["text-lg", "z-10"],
-                            ["will-change-transform"],
-                            ["transition-all", "duration-500", "delay-200"],
-                            isVisible
-                                ? ["opacity-100", "translate-y-0"]
-                                : ["opacity-0", "-translate-y-[117%]"],
-                            ["before:content-['']", "before:absolute"],
-                            ["before:inset-0", "before:-z-10"],
-                            ["before:bg-[#ff4600e6]", "before:blur-[4px]"],
-                            ["before:rounded-[100px]"],
-                            [
-                                "before:shadow-[0_4px_15px_10px_rgba(255,70,0,0.8)]",
-                            ],
+                            ["text-[15px]", "mt-[15px]"],
+                            ["tracking-[0.5px]"],
+                            ["w-full", "ease-out"],
+                            ["text-center", "text-[#ff4600]"],
                         )}
                     >
-                        <span className={twMerge("pt-2")}>경험하기</span>
-                    </Link>
+                        새로운 일상과 설레는 첫 만남, 쿨리타로 경험해보세요
+                    </p>
+                </ScrollReveal>
+                <span className={twMerge(["mt-15", "py-[15px]"])}>
+                    <ScrollReveal delay={300}>
+                        <Link
+                            to={"/products"}
+                            className={twMerge(
+                                ["relative"],
+                                ["flex", "justify-center", "items-center"],
+                                ["mx-auto", "my-[10px]"],
+                                ["h-10", "w-[174px]"],
+                                ["rounded-[100px]"],
+                                ["font-medium", "text-center", "text-white"],
+                                ["text-lg", "z-10"],
+                                ["before:content-['']", "before:absolute"],
+                                ["before:inset-0", "before:-z-10"],
+                                ["before:bg-[#ff4600e6]", "before:blur-[4px]"],
+                                ["before:rounded-[100px]"],
+                                [
+                                    "before:shadow-[0_4px_15px_10px_rgba(255,70,0,0.8)]",
+                                ],
+                            )}
+                        >
+                            <span className={twMerge("pt-2")}>경험하기</span>
+                        </Link>
+                    </ScrollReveal>
                 </span>
             </div>
         </>

@@ -2,7 +2,7 @@ import type {
     LoginFormType,
     LoginResponse,
     RegisterResponse,
-} from "../types/user.ts";
+} from "../types/auth.ts";
 import { httpClient } from "./axios.ts";
 import type { RegisterFormType } from "../pages/account/Register.tsx";
 

@@ -24,7 +24,7 @@ type Product = {
 
 const products: Product[] = [
     {
-        id: 1,
+        id: 2,
         image: LoveEdition,
         imageHover: LoveEditionHover,
         name: "쿨리타X그라플렉스 한정판 러브 에디션 마우스워시 500ml + 컵",
@@ -32,7 +32,7 @@ const products: Product[] = [
         price: "KRW 32,000",
     },
     {
-        id: 2,
+        id: 3,
         image: LemonGift,
         imageHover: LemonGiftHover,
         name: "쿨리타 선물세트 레몬러쉬 마우스워시 500ml + 컵",
@@ -40,7 +40,7 @@ const products: Product[] = [
         price: "KRW 32,000",
     },
     {
-        id: 3,
+        id: 4,
         image: EmeraldGift,
         imageHover: EmeraldGiftHover,
         name: "쿨리타 선물세트 에메랄드비치 마우스워시 500ml + 컵",
@@ -48,7 +48,7 @@ const products: Product[] = [
         price: "KRW 32,000",
     },
     {
-        id: 4,
+        id: 5,
         image: Sunset,
         imageHover: SunsetHover,
         name: "쿨리타 선물세트 선셋로맨스 마우스워시 500ml + 컵",
@@ -116,7 +116,7 @@ function BestProductsSwiper() {
                             )}
                         >
                             {/* 이미지 */}
-                            <Link to={`/shop/${item.id}`}>
+                            <Link to={`/products/${item.id}`}>
                                 <img
                                     src={
                                         hoveredId === item.id && item.imageHover
@@ -135,7 +135,7 @@ function BestProductsSwiper() {
                             </Link>
 
                             {/* 상품명 */}
-                            <Link to={`/shop/${item.id}`}>
+                            <Link to={`/products/${item.id}`}>
                                 <h3 className="font-semibold text-base text-center mb-2">
                                     {item.name}
                                 </h3>

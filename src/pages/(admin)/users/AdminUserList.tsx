@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router"; // react-router v6/v7
+import { Link, useSearchParams } from "react-router";
 import { twMerge } from "tailwind-merge";
 import {
     FiSearch,
@@ -10,40 +10,43 @@ import {
     FiChevronRight,
     FiRefreshCw,
 } from "react-icons/fi";
-import type { User } from "../../../types/user.ts";
-import type { AdminUserPagination } from "../../../types/admin.user.ts";
+import type {
+    AdminUserData,
+    AdminUserPagination,
+} from "../../../types/admin.user.ts";
 import { deleteUser, fetchUsers } from "../../../api/admin.user.api.ts";
 
 function AdminUserList() {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [users, setUsers] = useState<User[]>([]);
+    const [users, setUsers] = useState<AdminUserData[]>([]);
     const [pagination, setPagination] = useState<AdminUserPagination | null>(
         null,
     );
     const [loading, setLoading] = useState(false);
 
     const page = Number(searchParams.get("page")) || 1;
-    const limit = 10;
-
-    const loadUsers = async () => {
-        setLoading(true);
-        try {
-            const { data, pagination } = await fetchUsers(page, limit);
-
-            setUsers(data);
-            setPagination(pagination);
-        } catch (error) {
-            console.error("회원 목록 로딩 실패:", error);
-            alert("데이터를 불러오지 못했습니다.");
-        } finally {
-            setLoading(false);
-        }
-    };
+    const search = searchParams.get("search") || "";
 
     useEffect(() => {
+        const loadUsers = async () => {
+            setLoading(true);
+            try {
+                const { data, pagination } = await fetchUsers({
+                    page,
+                    limit: 10,
+                    search: search || undefined,
+                });
+                setUsers(data);
+                setPagination(pagination);
+            } catch (error) {
+                console.error("회원 목록 로딩 실패:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
         loadUsers().then(() => {});
-    }, [page]);
+    }, [page, search]);
 
     const handleDelete = async (userId: number) => {
         if (!window.confirm(`ID: ${userId} 회원을 정말 삭제하시겠습니까?`))
@@ -52,7 +55,6 @@ function AdminUserList() {
         try {
             await deleteUser(userId);
             alert("삭제되었습니다.");
-            loadUsers();
         } catch (error) {
             console.error("삭제 실패:", error);
             alert("삭제 중 오류가 발생했습니다.");
@@ -91,6 +93,15 @@ function AdminUserList() {
                         <input
                             type="text"
                             placeholder="회원 검색..."
+                            defaultValue={search}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    setSearchParams({
+                                        search: e.currentTarget.value,
+                                        page: "1",
+                                    });
+                                }
+                            }}
                             className={twMerge([
                                 "pl-10 pr-4 py-2.5 w-64",
                                 "bg-white border border-gray-200",

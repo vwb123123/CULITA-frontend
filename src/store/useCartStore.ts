@@ -15,6 +15,7 @@ interface CartState {
     loading: boolean;
 
     fetchCart: () => Promise<void>;
+    clearCart: () => void;
 
     //  장바구니 조작
     addItem: (productId: number, quantity: number) => Promise<void>;
@@ -34,6 +35,15 @@ const useCartStore = create<CartState>()(
             cartTotal: 0,
             loading: false,
 
+            clearCart: () => {
+                set({
+                    cartId: null,
+                    items: [],
+                    cartTotal: 0,
+                    loading: false,
+                });
+            },
+
             fetchCart: async () => {
                 set({ loading: true });
                 try {
@@ -45,6 +55,7 @@ const useCartStore = create<CartState>()(
                     });
                 } catch (e) {
                     console.log("장바구니 로드 실패", e);
+                    set({ items: [] });
                 } finally {
                     set({ loading: false });
                 }
@@ -53,7 +64,7 @@ const useCartStore = create<CartState>()(
             addItem: async (productId, quantity) => {
                 try {
                     await addToCart(productId, quantity);
-                    await get().fetchCart(); // 서버 기준으로 재동기화
+                    await get().fetchCart();
                 } catch (e) {
                     console.log("장바구니 담기 실패", e);
                     throw e;

@@ -3,20 +3,13 @@ import MainVideo from "../../assets/mainPage/CULITA_DTC_PC_23s.mp4";
 import { useEffect, useState } from "react";
 import type { ProductDetail } from "../../types/product.ts";
 import { useParams } from "react-router";
-import AOS from "aos";
 import { fetchProductDetail } from "../../api/product.api.ts";
 import Spinner from "../common/Spinner.tsx";
+import ScrollReveal from "../common/ScrollReveal.tsx";
 
 function MouthwashDetailPage() {
     const [product, setProduct] = useState<ProductDetail | null>(null);
     const { id } = useParams();
-
-    useEffect(() => {
-        AOS.init({
-            duration: 1000,
-            once: true,
-        });
-    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -80,105 +73,111 @@ function MouthwashDetailPage() {
                 <img src={product.images[7].url} alt="gift-set-Main" />
             </div>
             <div className={twMerge(["mt-50", "relative"])}>
-                <p
-                    data-aos="fade-up"
-                    data-aos-delay="300"
-                    className={twMerge(
-                        ["text-center", "text-3xl"],
-                        ["mt-4", "block", "font-medium"],
-                    )}
-                >
-                    {product.productName} 선물세트
-                </p>
+                <ScrollReveal delay={300}>
+                    <p
+                        className={twMerge(
+                            ["text-center", "text-3xl"],
+                            ["mt-4", "block", "font-medium"],
+                        )}
+                    >
+                        {product.productName} 선물세트
+                    </p>
+                </ScrollReveal>
                 <div
-                    data-aos="fade-up"
-                    data-aos-delay="300"
                     className={twMerge(
                         ["relative", "flex", "items-center"],
                         ["justify-center", "w-[1400px]"],
                         ["py-20", "px-6", "mt-[90px]", "mx-auto"],
                     )}
                 >
-                    <img
-                        src={product.images[8].url}
-                        alt="gift-set"
-                        className={twMerge(["w-[516px]"])}
-                    />
+                    <ScrollReveal delay={300}>
+                        <img
+                            src={product.images[8].url}
+                            alt="gift-set"
+                            className={twMerge(["w-[516px]"])}
+                        />
+                    </ScrollReveal>
                     <div className={"left-0 top-0 absolute"}>
-                        <p
-                            className={twMerge([
-                                "text-[44px]",
-                                "font-semibold",
-                            ])}
-                        >
-                            특별한 향기로
-                            <br /> 시작하는 당신의 일상
-                        </p>
-                        <span
-                            className={twMerge(
-                                ["text-[15px]", "leading-[24px]"],
-                                ["block", "mt-5"],
-                            )}
-                        >
-                            쿨리타의 세련된 향기로 하루를 시작해보세요. 아침
-                            일과를
-                            <br />
-                            더욱 특별하게 만들어 주며 마음의 여유를 가져다
-                            줍니다.
-                            <br />
-                            기분 좋은 향기가 당신의 하루를 돋보이게 만들
-                            것입니다.
-                        </span>
+                        <ScrollReveal delay={300}>
+                            <p
+                                className={twMerge([
+                                    "text-[44px]",
+                                    "font-semibold",
+                                ])}
+                            >
+                                특별한 향기로
+                                <br /> 시작하는 당신의 일상
+                            </p>
+                            <span
+                                className={twMerge(
+                                    ["text-[15px]", "leading-[24px]"],
+                                    ["block", "mt-5"],
+                                )}
+                            >
+                                쿨리타의 세련된 향기로 하루를 시작해보세요. 아침
+                                일과를
+                                <br />
+                                더욱 특별하게 만들어 주며 마음의 여유를 가져다
+                                줍니다.
+                                <br />
+                                기분 좋은 향기가 당신의 하루를 돋보이게 만들
+                                것입니다.
+                            </span>
+                        </ScrollReveal>
                     </div>
                     <div className={"left-0 bottom-0 absolute"}>
-                        <p
-                            className={twMerge([
-                                "text-[44px]",
-                                "font-semibold",
-                            ])}
-                        >
-                            행복한 순간을
-                            <br /> 만들기 위한 최상의 선택
-                        </p>
-                        <span
-                            className={twMerge(
-                                ["text-[15px]", "leading-[24px]"],
-                                ["block", "mt-5"],
-                            )}
-                        >
-                            쿨리타에게 마우스워시는 단순한 생활 용품이 아닌
-                            특별한 순간을
-                            <br />
-                            더욱 빛내 줄 완벽한 파트너입니다. 우리는 우아함과
-                            감동을 추구하는
-                            <br />
-                            사람들에게 완벽한 선물이 될 것입니다.
-                        </span>
+                        <ScrollReveal delay={300}>
+                            <p
+                                className={twMerge([
+                                    "text-[44px]",
+                                    "font-semibold",
+                                ])}
+                            >
+                                행복한 순간을
+                                <br /> 만들기 위한 최상의 선택
+                            </p>
+                            <span
+                                className={twMerge(
+                                    ["text-[15px]", "leading-[24px]"],
+                                    ["block", "mt-5"],
+                                )}
+                            >
+                                쿨리타에게 마우스워시는 단순한 생활 용품이 아닌
+                                특별한 순간을
+                                <br />
+                                더욱 빛내 줄 완벽한 파트너입니다. 우리는
+                                우아함과 감동을 추구하는
+                                <br />
+                                사람들에게 완벽한 선물이 될 것입니다.
+                            </span>
+                        </ScrollReveal>
                     </div>
                     <div className={"ml-240 top-1/2 absolute"}>
-                        <p
-                            className={twMerge([
-                                "text-[44px]",
-                                "font-semibold",
-                            ])}
-                        >
-                            소믈리에가 엄선한
-                            <br /> 최적의 맛과 향
-                        </p>
-                        <p
-                            className={twMerge(
-                                ["text-[15px]", "leading-[24px]"],
-                                ["block", "mt-5"],
-                            )}
-                        >
-                            쿨리타 마우스워시는 워터 소믈리에의 세심한
-                            테이스팅을 통해 최상의
-                            <br />
-                            맛과 품질을 구현합니다. 균형잡힌 저알코올 함량으로
-                            부드러운 사용감
-                            <br />과 은은한 향이 오랫동안 지속되며 입에 감기는
-                            깊은 맛이 당신을 매료시킬 것입니다
-                        </p>
+                        <ScrollReveal delay={300}>
+                            <p
+                                className={twMerge([
+                                    "text-[44px]",
+                                    "font-semibold",
+                                ])}
+                            >
+                                소믈리에가 엄선한
+                                <br /> 최적의 맛과 향
+                            </p>
+                            <p
+                                className={twMerge(
+                                    ["text-[15px]", "leading-[24px]"],
+                                    ["block", "mt-5"],
+                                )}
+                            >
+                                쿨리타 마우스워시는 워터 소믈리에의 세심한
+                                테이스팅을 통해 최상의
+                                <br />
+                                맛과 품질을 구현합니다. 균형잡힌 저알코올
+                                함량으로 부드러운 사용감
+                                <br />과 은은한 향이 오랫동안 지속되며 입에
+                                감기는 깊은 맛이 당신을 매료시킬 것입니다
+                            </p>
+                        </ScrollReveal>
                     </div>
                 </div>
             </div>
@@ -191,16 +190,19 @@ function MouthwashDetailPage() {
                 <img src={product.images[9].url} alt={"gift-set-banner"} />
             </div>
             <div className={"mt-35"}>
-                <p
-                    className={twMerge(
-                        ["block", "mt-6", "leading-[24px]"],
-                        ["text-center", "text-[15px]"],
-                    )}
-                >
-                    쿨리타는 자신을 사랑하고 돌보는 특별한 시간을 선사합니다.
-                    <br />
-                    쿨리타 한 잔으로 자신을 가꾸고 리프레시하세요.
-                </p>
+                <ScrollReveal delay={300}>
+                    <p
+                        className={twMerge(
+                            ["block", "mt-6", "leading-[24px]"],
+                            ["text-center", "text-[15px]"],
+                        )}
+                    >
+                        쿨리타는 자신을 사랑하고 돌보는 특별한 시간을
+                        선사합니다.
+                        <br />
+                        쿨리타 한 잔으로 자신을 가꾸고 리프레시하세요.
+                    </p>
+                </ScrollReveal>
                 <div
                     className={twMerge(
                         ["mt-15", "overflow-hidden", "flex", "flex-nowrap"],

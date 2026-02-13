@@ -1,13 +1,14 @@
-import type { User } from "../types/user.ts";
+import type { Auth } from "../types/auth.ts";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface AuthState {
     isLoggedIn: boolean;
     token: string | null;
-    user: User | null;
-    login: (token: string, user: User) => void;
+    user: Auth | null;
+    login: (token: string, user: Auth) => void;
     logout: () => void;
+    setUser: (user: Auth) => void;
 }
 
 const useAuthStore = create<AuthState>()(
@@ -16,9 +17,14 @@ const useAuthStore = create<AuthState>()(
             isLoggedIn: false,
             token: null,
             user: null,
-            login: (token: string, user: User) =>
+            login: (token: string, user: Auth) =>
                 set({ isLoggedIn: true, token, user }),
             logout: () => set({ isLoggedIn: false, token: null, user: null }),
+            setUser: (user: Auth) =>
+                set((state) => ({
+                    ...state,
+                    user: user,
+                })),
         }),
         { name: "auth-storage" },
     ),

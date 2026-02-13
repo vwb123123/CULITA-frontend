@@ -1,8 +1,9 @@
 import { twMerge } from "tailwind-merge";
 import TopHeader from "../components/layout/TopHeader.tsx";
 import Header from "../components/layout/Header.tsx";
-import { Outlet } from "react-router";
+import { Outlet, ScrollRestoration } from "react-router";
 import Footer from "../components/layout/Footer.tsx";
+import TopButton from "../components/common/TopButton.tsx";
 
 function Layout() {
     return (
@@ -17,8 +18,10 @@ function Layout() {
             </div>
             <Header />
             <main className={"flex-1"}>
+                <ScrollRestoration />
                 <Outlet />
             </main>
+            <TopButton />
             <Footer />
         </div>
     );

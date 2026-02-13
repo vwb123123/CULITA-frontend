@@ -6,8 +6,18 @@ import type {
     ConfirmOrderRequest,
 } from "../types/order.ts";
 
+export interface OrderFilterParams {
+    status?: string;
+    period?: string;
+    page?: number;
+    limit?: number;
+}
+
 export const checkoutOrder = async (data: CreateOrderRequest) => {
-    const response = await httpClient.post<Order>("/orders/checkout", data);
+    const response = await httpClient.post<{ data: Order; message: string }>(
+        "/orders/checkout",
+        data,
+    );
     return response.data;
 };
 
@@ -16,8 +26,10 @@ export const confirmOrder = async (data: ConfirmOrderRequest) => {
     return response.data;
 };
 
-export const getOrders = async () => {
-    const response = await httpClient.get<OrdersResponse>("/orders");
+export const getOrders = async (params?: OrderFilterParams) => {
+    const response = await httpClient.get<OrdersResponse>("/orders", {
+        params: params,
+    });
     return response.data;
 };
 

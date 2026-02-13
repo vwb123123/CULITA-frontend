@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router";
 import useCartStore from "../../store/useCartStore.ts";
-import useAuthStore from "../../store/useAuthStore.ts"; // 추가
+import useAuthStore from "../../store/useAuthStore.ts";
 import { twMerge } from "tailwind-merge";
 import { IoIosMenu } from "react-icons/io";
 import logo from "../../assets/mainPage/logo2.png";
-import { type MouseEvent, useState } from "react";
+import { type MouseEvent, useEffect, useState } from "react";
 
 interface MenuItem {
     name: string;
@@ -38,8 +38,8 @@ function Header() {
 
     const { isLoggedIn, logout } = useAuthStore();
 
-    const getTotalItems = useCartStore((state) => state.getTotalCount);
-    const cartItemsCount = getTotalItems();
+    const { fetchCart, clearCart, getTotalCount } = useCartStore();
+    const cartItemsCount = getTotalCount();
 
     const [isAccountMenuHovered, setIsAccountMenuHovered] = useState(false);
     const [isHeaderHovered, setIsHeaderHovered] = useState(false);
@@ -48,11 +48,20 @@ function Header() {
         const confirm = window.confirm("로그아웃 하시겠습니까?");
         if (confirm) {
             logout();
-            setIsAccountMenuHovered(false); // 드롭다운 닫기
+            clearCart();
+            setIsAccountMenuHovered(false);
             alert("로그아웃 되었습니다.");
             navigate("/");
         }
     };
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            fetchCart().then(() => {});
+        } else {
+            clearCart();
+        }
+    }, [clearCart, fetchCart, isLoggedIn]);
 
     const handleMenuClick = (
         item: MenuItem,
@@ -64,7 +73,6 @@ function Header() {
         }
     };
 
-    // 로그인 상태에 따라 메뉴 선택
     const ACCOUNT_MENU = isLoggedIn ? ACCOUNT_MENU_LOGIN : ACCOUNT_MENU_LOGOUT;
 
     return (
@@ -104,7 +112,6 @@ function Header() {
                             <img src={logo} alt={"Logo"} />
                         </Link>
                     </div>
-                    {/* menu Items */}
                     <div className={twMerge(["h-[70px]"])}>
                         <nav
                             className={twMerge(
@@ -113,7 +120,6 @@ function Header() {
                                 ["font-medium", "gap-8"],
                             )}
                         >
-                            {/* 메뉴 구성 */}
                             {MENU.map((menu) => (
                                 <div
                                     key={menu.name}
@@ -144,7 +150,6 @@ function Header() {
 
                 {/* 헤더 오른쪽 부분 */}
                 <div className={twMerge(["flex", "items-center", "gap-8"])}>
-                    {/* ACCOUNT 부분 */}
                     <div
                         className={twMerge(
                             ["relative", "h-[70px]"],
@@ -162,7 +167,6 @@ function Header() {
                         <span className={twMerge(["z-10"])}>ACCOUNT</span>
                     </div>
 
-                    {/* 장바구니 부분 */}
                     <div className="h-[70px] flex items-center">
                         <Link
                             to={"/cart"}
@@ -179,7 +183,7 @@ function Header() {
                 </div>
             </div>
 
-            {/* ACCOUNT 드롭다운 메뉴 영역 */}
+            {/* ACCOUNT 메뉴 영역 */}
             <div
                 className={twMerge(
                     [

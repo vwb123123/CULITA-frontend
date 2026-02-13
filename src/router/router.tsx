@@ -12,9 +12,7 @@ import BrandPage from "../pages/(brand)/BrandPage.tsx";
 import FilmPage from "../pages/(film)/FilmPage.tsx";
 import EventPage from "../pages/(event)/EventPage.tsx";
 import MyPageHome from "../pages/account/mypages/MyPageHome.tsx";
-import OrderHistory from "../pages/account/mypages/OrderHistory.tsx";
-import CancelHistory from "../pages/account/mypages/CancelHistory.tsx";
-import UserInfo from "../pages/account/mypages/UserInfo.tsx";
+import MyOrderHistory from "../pages/account/mypages/MyOrderHistory.tsx";
 import CulitaSeason2 from "../pages/(film)/(filmDetailPages)/CulitaSeason2.tsx";
 import CulitaCollaboration from "../pages/(film)/(filmDetailPages)/CulitaCollaboration.tsx";
 import CulitaEveryday from "../pages/(film)/(filmDetailPages)/CulitaEveryday.tsx";
@@ -38,6 +36,21 @@ import AdminProductEdit from "../pages/(admin)/products/AdminProductEdit.tsx";
 import Agreement from "../components/layout/footerLinks/Agreement.tsx";
 import Privacy from "../components/layout/footerLinks/Privacy.tsx";
 import ProductDetailPage from "../pages/(shop)/ProductDetailPage.tsx";
+import CheckoutPage from "../components/shop/orders/CheckoutPage.tsx";
+import OrderSuccessPage from "../components/shop/orders/OrderSuccessPage.tsx";
+import OrderFailPage from "../components/shop/orders/OrderFailPage.tsx";
+import MyInquiryWrite from "../pages/account/mypages/Inquiries/MyInquiryWrite.tsx";
+import MyInquiryDetail from "../pages/account/mypages/Inquiries/MyInquiryDetail.tsx";
+import MyInquiryEdit from "../pages/account/mypages/Inquiries/MyInquiryEdit.tsx";
+import MyCancelHistory from "../pages/account/mypages/MyCancelHistory.tsx";
+import MyReviewList from "../pages/account/mypages/MyReviewList.tsx";
+import MyCustomerCenter from "../pages/account/mypages/MyCustomerCenter.tsx";
+import MyUserInfo from "../pages/account/mypages/MyUserInfo.tsx";
+import AdminOrderList from "../pages/(admin)/orders/AdminOrderList.tsx";
+import AdminOrderDetail from "../pages/(admin)/orders/AdminOrderDetail.tsx";
+import AdminReviewList from "../pages/(admin)/reviews/AdminReviewList.tsx";
+import AdminInquiryList from "../pages/(admin)/inquiries/AdminInquiryList.tsx";
+import AdminInquiryDetail from "../pages/(admin)/inquiries/AdminInquiryDetail.tsx";
 
 export const adminOnlyLoader = () => {
     const { isLoggedIn, user } = useAuthStore.getState();
@@ -90,18 +103,28 @@ const router = createBrowserRouter([
             { path: "check-order", element: <CheckOrder /> },
             { path: "faq", element: <FaQ /> },
             { path: "cart", element: <CartPage /> },
+            {
+                path: "orders",
+                children: [
+                    { path: "checkout", element: <CheckoutPage /> },
+                    { path: "success", element: <OrderSuccessPage /> },
+                    { path: "fail", element: <OrderFailPage /> },
+                ],
+            },
 
             {
                 path: "mypage",
                 element: <MyPage />,
                 children: [
-                    {
-                        index: true,
-                        element: <MyPageHome />,
-                    },
-                    { path: "order-history", element: <OrderHistory /> },
-                    { path: "cancel-history", element: <CancelHistory /> },
-                    { path: "profile", element: <UserInfo /> },
+                    { index: true, element: <MyPageHome /> },
+                    { path: "orders", element: <MyOrderHistory /> },
+                    { path: "cancel", element: <MyCancelHistory /> },
+                    { path: "reviews", element: <MyReviewList /> },
+                    { path: "customer-center", element: <MyCustomerCenter /> },
+                    { path: "inquiry/write", element: <MyInquiryWrite /> },
+                    { path: "inquiry/:id", element: <MyInquiryDetail /> },
+                    { path: "inquiry/edit/:id", element: <MyInquiryEdit /> },
+                    { path: "user-info", element: <MyUserInfo /> },
                 ],
             },
             { path: "agreement", element: <Agreement /> },
@@ -136,6 +159,24 @@ const router = createBrowserRouter([
                     { index: true, element: <AdminProductList /> },
                     { path: "create", element: <AdminProductCreate /> },
                     { path: ":id", element: <AdminProductEdit /> },
+                ],
+            },
+            {
+                path: "orders",
+                children: [
+                    { index: true, element: <AdminOrderList /> },
+                    { path: ":id", element: <AdminOrderDetail /> },
+                ],
+            },
+            {
+                path: "reviews",
+                children: [{ index: true, element: <AdminReviewList /> }],
+            },
+            {
+                path: "inquiries",
+                children: [
+                    { index: true, element: <AdminInquiryList /> },
+                    { path: ":id", element: <AdminInquiryDetail /> },
                 ],
             },
         ],

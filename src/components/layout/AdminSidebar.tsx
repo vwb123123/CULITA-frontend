@@ -7,9 +7,11 @@ import {
     FiList,
     FiPackage,
     FiLogOut,
+    FiMessageSquare,
 } from "react-icons/fi";
 import logo from "../../assets/mainPage/logo2.png";
 import useAuthStore from "../../store/useAuthStore.ts";
+import { RiCustomerServiceLine } from "react-icons/ri";
 
 const MENUS = [
     { name: "대시보드", path: "/admin", icon: <FiHome /> },
@@ -17,6 +19,12 @@ const MENUS = [
     { name: "카테고리 관리", path: "/admin/categories", icon: <FiList /> },
     { name: "상품 관리", path: "/admin/products", icon: <FiShoppingBag /> },
     { name: "주문 관리", path: "/admin/orders", icon: <FiPackage /> },
+    { name: "리뷰 관리", path: "/admin/reviews", icon: <FiMessageSquare /> },
+    {
+        name: "문의 관리",
+        path: "/admin/inquiries",
+        icon: <RiCustomerServiceLine />,
+    },
 ];
 
 function AdminSidebar() {

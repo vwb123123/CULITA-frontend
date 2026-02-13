@@ -1,28 +1,44 @@
+export type OrderStatus =
+    | "PENDING"
+    | "PAID"
+    | "PREPARING"
+    | "SHIPPING"
+    | "SHIPPED"
+    | "DELIVERED"
+    | "CANCELED"
+    | "EXCHANGE_REQUIRED"
+    | "EXCHANGED"
+    | "RETURN_REQUESTED"
+    | "RETURN_COMPLETED";
+
 // 공통 상품 정보
-interface OrderProduct {
+export interface OrderProduct {
+    id: number;
     name: string;
     images: { url: string }[];
 }
 
 // 주문 아이템 상세
-interface OrderItem {
+export interface OrderItem {
     id: number;
+    productId: number;
     quantity: number;
     price: number;
     product: OrderProduct;
 }
 
 // 결제 정보
-interface PaymentInfo {
+export interface PaymentInfo {
     method: string;
     amount: number;
-    status: string;
+    status: OrderStatus;
     approvedAt: string | null;
 }
 
 // 주문 정보
 export interface Order {
     id: number;
+    orderNumber: string;
     createdAt: string;
     totalPrice: number;
     status: string;
@@ -32,7 +48,7 @@ export interface Order {
     payment: PaymentInfo;
 }
 
-// 주문 생성 요청 (Checkout)
+// 주문 생성 요청
 export interface CreateOrderRequest {
     items: { productId: number; quantity: number }[];
     recipientName: string;
@@ -44,16 +60,16 @@ export interface CreateOrderRequest {
     deliveryRequest?: string;
 }
 
-// 주문 확정 요청 (Confirm)
+// 주문 확정 요청
 export interface ConfirmOrderRequest {
-    orderId: number;
+    orderId: string;
     paymentKey: string;
     amount: number;
 }
 
 // API 공통 응답 구조 (목록 조회용)
 export interface OrdersResponse {
-    data: Order[];
+    data: Order[] | { data: Order[] };
     pagination: {
         total: number;
         totalPages: number;

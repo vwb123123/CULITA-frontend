@@ -1,7 +1,7 @@
 @import "tailwindcss";
-
 @import "swiper/css";
 @import "swiper/css/navigation";
+@plugin "@tailwindcss/typography";
 
 @theme {
     --font-sans:
@@ -75,4 +75,25 @@ image {
 .slide-img {
     display: flex;
     animation: marquee 20s linear infinite;
+}
+
+{/* tiptap 스타일 */}
+.tiptap-content span[style] {
+    display: inline-block;
+}
+
+.tiptap-content p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+/* 정렬 스타일 */
+.tiptap-content [style*="text-align: center"] {
+    text-align: center;
+}
+.tiptap-content [style*="text-align: right"] {
+    text-align: right;
+}
+.tiptap-content [style*="text-align: left"] {
+    text-align: left;
 }

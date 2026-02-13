@@ -17,7 +17,7 @@ const EVENT_PAGE: EventItem[] = [
     {
         title: "쿨리타X그라플렉스 러브에디션 런칭 EVENT",
         image: img1,
-        path: "/shop", // 여기 경로 나중에 수정하기!!
+        path: "/products/2",
     },
     { title: "CULITA 5월의 선물", image: img2, path: "/event/event-list1" },
     { title: "쿨리타스 3기 모집", image: img3, path: "/event/event-list2" },

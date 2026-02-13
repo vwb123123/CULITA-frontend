@@ -1,32 +1,28 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { twMerge } from "tailwind-merge";
-import {
-    FiArrowLeft,
-    FiSave,
-    FiInfo,
-    FiRefreshCw,
-    FiAlertCircle,
-} from "react-icons/fi";
+import { FiArrowLeft, FiSave, FiInfo, FiRefreshCw } from "react-icons/fi";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import {
-    fetchUser,
-    updateUser,
-} from "../../../api/admin.user.api";
-import type { User } from "../../../types/user";
+import { fetchUser, updateUser } from "../../../api/admin.user.api";
 import { AxiosError } from "axios";
-import type { UpdateUserRequest } from "../../../types/admin.user.ts";
+import type {
+    AdminUserData,
+    UpdateUserRequest,
+} from "../../../types/admin.user.ts";
+import DaumPostcodeEmbed, { type Address } from "react-daum-postcode";
 
 function AdminUserEdit() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [isLoadingData, setIsLoadingData] = useState(true);
-    const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const [currentUser, setCurrentUser] = useState<AdminUserData | null>(null);
+    const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);
 
     const {
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors, isSubmitting },
     } = useForm<UpdateUserRequest>();
 
@@ -40,8 +36,15 @@ function AdminUserEdit() {
                 reset({
                     name: userData.name,
                     email: userData.email,
-                    phoneNumber: userData.phoneNumber,
+                    phoneNumber: userData.phoneNumber || "",
                     role: userData.role,
+                    gender: userData.gender || "MALE",
+                    birthYear: userData.birthYear || "",
+                    birthMonth: userData.birthMonth || "",
+                    birthDay: userData.birthDay || "",
+                    zipCode: userData.zipCode || "",
+                    address1: userData.address1 || "",
+                    address2: userData.address2 || "",
                 });
             } catch (error) {
                 console.error("회원 정보 로딩 실패:", error);
@@ -60,7 +63,7 @@ function AdminUserEdit() {
 
         const payload: UpdateUserRequest = {
             ...data,
-            password: data.password ? data.password : undefined,
+            password: data.password || undefined,
         };
 
         if (!confirm("회원 정보를 수정하시겠습니까?")) return;
@@ -71,11 +74,35 @@ function AdminUserEdit() {
             navigate("/admin/users");
         } catch (error) {
             console.error("수정 실패:", error);
-            let message = "수정 중 오류가 발생했습니다.";
-            if (error instanceof AxiosError)
-                message = error.response?.data?.message;
-            alert(message);
+            if (error instanceof AxiosError && error.response) {
+                const errorDetails = JSON.stringify(
+                    error.response.data.errors,
+                    null,
+                    2,
+                );
+                alert(`검증 에러 발생!\n${errorDetails}`);
+                console.log("상세에러:", error.response.data.errors);
+            }
         }
+    };
+
+    const handleComplete = (data: Address) => {
+        let fullAddress = data.address;
+        let extraAddress = "";
+
+        if (data.addressType === "R") {
+            if (data.bname !== "") extraAddress += data.bname;
+            if (data.buildingName !== "") {
+                extraAddress +=
+                    extraAddress !== ""
+                        ? `, ${data.buildingName}`
+                        : data.buildingName;
+            }
+            fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+        }
+        setValue("zipCode", data.zonecode);
+        setValue("address1", fullAddress);
+        setIsPostcodeOpen(false);
     };
 
     if (isLoadingData) {
@@ -89,7 +116,6 @@ function AdminUserEdit() {
 
     return (
         <div className="max-w-4xl mx-auto space-y-6">
-            {/* [Header] */}
             <div className="flex items-center gap-4 mb-8">
                 <button
                     onClick={() => navigate(-1)}
@@ -118,11 +144,11 @@ function AdminUserEdit() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                     <div className="col-span-1 md:col-span-2 pb-2 border-b border-gray-100 mb-2">
                         <h3 className="text-lg font-semibold text-gray-700 flex items-center gap-2">
-                            <FiInfo className="text-[#ff4600]" />
-                            기본 계정 정보
+                            <FiInfo className="text-[#ff4600]" /> 기본 계정 정보
                         </h3>
                     </div>
 
+                    {/* 아이디 (수정 불가) */}
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-gray-700">
                             아이디
@@ -131,17 +157,11 @@ function AdminUserEdit() {
                             type="text"
                             value={currentUser?.username || ""}
                             disabled
-                            className={twMerge([
-                                "w-full px-4 py-3 rounded-xl",
-                                "bg-gray-100 border border-gray-200 text-gray-500",
-                                "cursor-not-allowed",
-                            ])}
+                            className="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-200 text-gray-500 cursor-not-allowed"
                         />
-                        <p className="text-xs text-gray-400">
-                            아이디는 변경할 수 없습니다.
-                        </p>
                     </div>
 
+                    {/* 이메일 */}
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-gray-700">
                             이메일 <span className="text-red-500">*</span>
@@ -149,19 +169,12 @@ function AdminUserEdit() {
                         <input
                             type="email"
                             className={twMerge([
-                                "w-full px-4 py-3 rounded-xl",
-                                "bg-gray-50 border border-gray-200",
-                                "focus:bg-white focus:border-[#ff4600] focus:ring-1 focus:ring-[#ff4600]",
-                                "outline-none transition-all duration-200",
+                                "w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ff4600] outline-none transition-all",
                                 errors.email &&
-                                    "border-red-500 focus:border-red-500 focus:ring-red-200",
+                                    "border-red-500 focus:border-red-500",
                             ])}
                             {...register("email", {
                                 required: "이메일은 필수입니다.",
-                                pattern: {
-                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                                    message: "유효한 이메일 형식이 아닙니다.",
-                                },
                             })}
                         />
                         {errors.email && (
@@ -171,55 +184,36 @@ function AdminUserEdit() {
                         )}
                     </div>
 
+                    {/* 비밀번호 */}
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <label className="text-sm font-medium text-gray-700">
                             비밀번호 변경
-                            <span className="text-xs font-normal text-gray-400 bg-gray-100 px-2 py-0.5 rounded">
-                                선택사항
-                            </span>
                         </label>
                         <input
                             type="password"
-                            placeholder="변경할 경우에만 입력하세요"
-                            className={twMerge([
-                                "w-full px-4 py-3 rounded-xl",
-                                "bg-gray-50 border border-gray-200",
-                                "focus:bg-white focus:border-[#ff4600] focus:ring-1 focus:ring-[#ff4600]",
-                                "outline-none transition-all duration-200",
-                                errors.password &&
-                                    "border-red-500 focus:border-red-500 focus:ring-red-200",
-                            ])}
+                            placeholder="변경 시에만 입력"
+                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ff4600] outline-none transition-all"
                             {...register("password", {
                                 minLength: {
                                     value: 8,
-                                    message:
-                                        "비밀번호는 8자 이상이어야 합니다.",
+                                    message: "8자 이상 입력하세요.",
                                 },
                             })}
                         />
-                        {errors.password ? (
+                        {errors.password && (
                             <p className="text-xs text-red-500">
                                 {errors.password.message}
-                            </p>
-                        ) : (
-                            <p className="text-xs text-orange-500 flex items-center gap-1">
-                                <FiAlertCircle /> 비워두면 기존 비밀번호가
-                                유지됩니다.
                             </p>
                         )}
                     </div>
 
+                    {/* 권한 */}
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-gray-700">
                             계정 권한
                         </label>
                         <select
-                            className={twMerge([
-                                "w-full px-4 py-3 rounded-xl",
-                                "bg-gray-50 border border-gray-200",
-                                "focus:bg-white focus:border-[#ff4600] focus:ring-1 focus:ring-[#ff4600]",
-                                "outline-none transition-all duration-200",
-                            ])}
+                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ff4600] outline-none transition-all"
                             {...register("role")}
                         >
                             <option value="USER">일반 회원 (USER)</option>
@@ -233,6 +227,7 @@ function AdminUserEdit() {
                         </h3>
                     </div>
 
+                    {/* 이름 */}
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-gray-700">
                             이름 (실명) <span className="text-red-500">*</span>
@@ -240,19 +235,12 @@ function AdminUserEdit() {
                         <input
                             type="text"
                             className={twMerge([
-                                "w-full px-4 py-3 rounded-xl",
-                                "bg-gray-50 border border-gray-200",
-                                "focus:bg-white focus:border-[#ff4600] focus:ring-1 focus:ring-[#ff4600]",
-                                "outline-none transition-all duration-200",
+                                "w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ff4600] outline-none transition-all",
                                 errors.name &&
-                                    "border-red-500 focus:border-red-500 focus:ring-red-200",
+                                    "border-red-500 focus:border-red-500",
                             ])}
                             {...register("name", {
                                 required: "이름은 필수입니다.",
-                                minLength: {
-                                    value: 2,
-                                    message: "이름은 2자 이상이어야 합니다.",
-                                },
                             })}
                         />
                         {errors.name && (
@@ -262,32 +250,151 @@ function AdminUserEdit() {
                         )}
                     </div>
 
+                    {/* 휴대전화 */}
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-gray-700">
                             휴대전화
                         </label>
                         <input
                             type="text"
-                            className={twMerge([
-                                "w-full px-4 py-3 rounded-xl",
-                                "bg-gray-50 border border-gray-200",
-                                "focus:bg-white focus:border-[#ff4600] focus:ring-1 focus:ring-[#ff4600]",
-                                "outline-none transition-all duration-200",
-                                errors.phoneNumber &&
-                                    "border-red-500 focus:border-red-500 focus:ring-red-200",
-                            ])}
-                            {...register("phoneNumber", {
-                                pattern: {
-                                    value: /^\d{2,3}-\d{3,4}-\d{4}$/,
-                                    message: "올바른 전화번호 형식이 아닙니다.",
-                                },
-                            })}
+                            placeholder="010-0000-0000"
+                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ff4600] outline-none transition-all"
+                            {...register("phoneNumber")}
                         />
-                        {errors.phoneNumber && (
-                            <p className="text-xs text-red-500">
-                                {errors.phoneNumber.message}
-                            </p>
+                    </div>
+
+                    {/* 성별 */}
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium text-gray-700">
+                            성별
+                        </label>
+                        <div className="flex gap-6 py-3">
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="radio"
+                                    value="MALE"
+                                    {...register("gender")}
+                                    className="w-4 h-4 accent-[#ff4600]"
+                                />
+                                <span className="text-sm text-gray-600">
+                                    남성
+                                </span>
+                            </label>
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="radio"
+                                    value="FEMALE"
+                                    {...register("gender")}
+                                    className="w-4 h-4 accent-[#ff4600]"
+                                />
+                                <span className="text-sm text-gray-600">
+                                    여성
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    {/*  생년월일 */}
+                    <div className="col-span-1 md:col-span-2 space-y-2">
+                        <label className="text-sm font-medium text-gray-700">
+                            생년월일
+                        </label>
+                        <div className="grid grid-cols-3 gap-4">
+                            <input
+                                type="text"
+                                placeholder="년(YYYY)"
+                                className="px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ff4600] outline-none transition-all"
+                                {...register("birthYear")}
+                            />
+                            <input
+                                type="text"
+                                placeholder="월(MM)"
+                                className="px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ff4600] outline-none transition-all"
+                                {...register("birthMonth")}
+                            />
+                            <input
+                                type="text"
+                                placeholder="일(DD)"
+                                className="px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ff4600] outline-none transition-all"
+                                {...register("birthDay")}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="col-span-1 md:col-span-2 pb-2 border-b border-gray-100 mt-4 mb-2">
+                        <h3 className="text-lg font-semibold text-gray-700">
+                            주소 정보
+                        </h3>
+                    </div>
+
+                    <div className="col-span-1 md:col-span-2 space-y-4">
+                        {/* 우편번호 */}
+                        <div className="flex flex-col gap-2">
+                            <label className="text-sm font-medium text-gray-700">
+                                우편번호
+                            </label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="text"
+                                    placeholder="우편번호"
+                                    readOnly
+                                    className="w-32 px-4 py-3 rounded-xl bg-gray-100 border border-gray-200 text-gray-500 outline-none flex-2"
+                                    {...register("zipCode", {
+                                        required: "우편번호는 필수입니다.",
+                                    })}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setIsPostcodeOpen(!isPostcodeOpen)
+                                    }
+                                    className="px-4 py-2 bg-gray-800 text-white rounded-xl text-sm font-medium hover:bg-gray-700 transition-colors"
+                                >
+                                    우편번호 찾기
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* 기본 주소 */}
+
+                        {isPostcodeOpen && (
+                            <div className="border border-gray-200 rounded-xl overflow-hidden mb-4">
+                                <DaumPostcodeEmbed
+                                    onComplete={handleComplete}
+                                />
+                            </div>
                         )}
+                        <div className="flex flex-col gap-2">
+                            <label className="text-sm font-medium text-gray-700">
+                                기본 주소
+                            </label>
+                            <input
+                                type="text"
+                                placeholder="주소를 입력하세요"
+                                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ff4600] outline-none transition-all"
+                                {...register("address1", {
+                                    required: "기본 주소는 필수입니다.",
+                                })}
+                            />
+                            {errors.address1 && (
+                                <p className="text-xs text-red-500">
+                                    {errors.address1.message}
+                                </p>
+                            )}
+                        </div>
+
+                        {/* 상세 주소 */}
+                        <div className="flex flex-col gap-2">
+                            <label className="text-sm font-medium text-gray-700">
+                                상세 주소
+                            </label>
+                            <input
+                                type="text"
+                                placeholder="상세 주소를 입력하세요"
+                                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ff4600] outline-none transition-all"
+                                {...register("address2")}
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -302,25 +409,14 @@ function AdminUserEdit() {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className={twMerge([
-                            "flex items-center gap-2",
-                            "px-8 py-3",
-                            "bg-[#ff4600] text-white",
-                            "rounded-[100px]",
-                            "text-sm font-bold",
-                            "hover:bg-[#e63f00] hover:shadow-lg hover:shadow-[#ff4600]/20",
-                            "disabled:opacity-50 disabled:cursor-not-allowed",
-                            "transition-all duration-300",
-                        ])}
+                        className="flex items-center gap-2 px-8 py-3 bg-[#ff4600] text-white rounded-[100px] text-sm font-bold hover:bg-[#e63f00] disabled:opacity-50 transition-all"
                     >
                         {isSubmitting ? (
-                            <span>수정 중...</span>
+                            <FiRefreshCw className="animate-spin" />
                         ) : (
-                            <>
-                                <FiSave className="text-lg" />
-                                <span>수정 완료</span>
-                            </>
+                            <FiSave size={18} />
                         )}
+                        <span>{isSubmitting ? "수정 중..." : "수정 완료"}</span>
                     </button>
                 </div>
             </form>

@@ -1,18 +1,21 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
-import MyPageHome from "./MyPageHome";
 import useAuthStore from "../../../store/useAuthStore.ts";
-import OrderHistory from "./OrderHistory.tsx";
-import UserInfo from "./UserInfo.tsx";
-import CancelHistory from "./CancelHistory.tsx";
 
-const TABS = ["홈", "주문내역조회", "취소/교환/반품", "회원정보"];
+const TABS = [
+    { label: "홈", path: "/mypage" },
+    { label: "주문내역조회", path: "/mypage/orders" },
+    { label: "취소/교환/반품", path: "/mypage/cancel" },
+    { label: "리뷰관리", path: "/mypage/reviews" },
+    { label: "고객센터", path: "/mypage/customer-center" },
+    { label: "회원정보", path: "/mypage/user-info" },
+];
 
 const MyPage = () => {
     const navigate = useNavigate();
+    const { pathname } = useLocation();
     const { isLoggedIn, user } = useAuthStore();
-    const [activeTab, setActiveTab] = useState("홈");
 
     const isAdmin = user?.role === "ADMIN";
 
@@ -54,18 +57,24 @@ const MyPage = () => {
             >
                 {TABS.map((tab) => (
                     <button
-                        key={tab}
-                        onClick={() => setActiveTab(tab)}
+                        key={tab.label}
+                        onClick={() => navigate(tab.path)}
                         className={twMerge(
-                            ["text-sm", "font-medium", "transition-all"],
-                            ["flex", "items-center", "gap-2"],
-                            ["px-4", "py-1.5"],
-                            activeTab === tab
+                            [
+                                "text-sm",
+                                "font-medium",
+                                "transition-all",
+                                "px-4",
+                                "py-1.5",
+                            ],
+                            pathname === tab.path ||
+                                (tab.path !== "/mypage" &&
+                                    pathname.startsWith(tab.path))
                                 ? ["text-white", "bg-[#ff4600]", "rounded-full"]
                                 : ["text-gray-700", "hover:text-black"],
                         )}
                     >
-                        {tab}
+                        {tab.label}
                     </button>
                 ))}
 
@@ -85,11 +94,9 @@ const MyPage = () => {
                 )}
             </nav>
 
-            {/* 탭에 따른 컴포넌트 렌더링 */}
-            {activeTab === "홈" && <MyPageHome />}
-            {activeTab === "주문내역조회" && <OrderHistory />}
-            {activeTab === "취소/교환/반품" && <CancelHistory />}
-            {activeTab === "회원정보" && <UserInfo />}
+            <main>
+                <Outlet />
+            </main>
         </div>
     );
 };

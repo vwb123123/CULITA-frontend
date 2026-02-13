@@ -1,10 +1,7 @@
 import { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import LocomotiveScroll from "locomotive-scroll";
 import "locomotive-scroll/dist/locomotive-scroll.css";
 import { twMerge } from "tailwind-merge";
-
 import BrandMain1 from "../../assets/BRAND Page/Brand_kv_pc.jpg";
 import BrandMainCulita from "../../assets/BRAND Page/logo_w.png";
 import BrandMain2 from "../../assets/BRAND Page/brand_1.png";
@@ -15,11 +12,10 @@ import BrandSub3 from "../../assets/BRAND Page/Brand_sub03_pc.jpg";
 import BrandText2 from "../../assets/BRAND Page/brand_txt_2.png";
 import BrandEnd from "../../assets/BRAND Page/Brand_end_pc.jpg";
 import BrandText3 from "../../assets/BRAND Page/brand_txt_3.png";
+import ScrollReveal from "../../components/common/ScrollReveal.tsx";
 
 function BrandPage() {
     useEffect(() => {
-        AOS.init({ duration: 1000, once: false });
-
         const scroll = new LocomotiveScroll();
 
         return () => {
@@ -49,25 +45,27 @@ function BrandPage() {
                     data-scroll
                     data-scroll-speed="1"
                 >
-                    <img
-                        src={BrandMainCulita}
-                        alt="Logo"
-                        className={twMerge(
-                            ["mt-0", "opacity-50"],
-                            ["w-[calc(760/1920*100vw)]"],
-                            ["transition-all", "duration-500"],
-                            ["ease-in-out"],
-                        )}
-                    />
-                    <img
-                        src={BrandMain2}
-                        alt="Logo2"
-                        className={twMerge(
-                            ["opacity-50"],
-                            ["w-[calc(760/1920*100vw)]"],
-                            ["mt-[calc(1000/1920*100vw)]"],
-                        )}
-                    />
+                    <ScrollReveal delay={200}>
+                        <img
+                            src={BrandMainCulita}
+                            alt="Logo"
+                            className={twMerge(
+                                ["mt-0", "opacity-50"],
+                                ["w-[calc(760/1920*100vw)]"],
+                            )}
+                        />
+                    </ScrollReveal>
+                    <ScrollReveal delay={500}>
+                        <img
+                            src={BrandMain2}
+                            alt="Logo2"
+                            className={twMerge(
+                                ["opacity-50"],
+                                ["w-[calc(760/1920*100vw)]"],
+                                ["mt-[calc(1000/1920*100vw)]"],
+                            )}
+                        />
+                    </ScrollReveal>
                 </div>
             </section>
 
@@ -76,20 +74,18 @@ function BrandPage() {
                 <div className={twMerge(["w-1/2", "relative", "leading-[0]"])}>
                     <img src={BrandSub1} alt="Sub1" className="w-full" />
                     <div
-                        className={twMerge([
-                            "absolute",
-                            "left-0",
-                            "bottom-[100px]",
-                            "w-full",
-                            "text-center",
-                        ])}
-                        data-aos="fade-up"
+                        className={twMerge(
+                            ["absolute", "left-0"],
+                            ["bottom-[100px]", "w-full", "text-center"],
+                        )}
                     >
-                        <img
-                            src={BrandText1}
-                            alt="Txt1"
-                            className="w-[calc(706/1920*100vw)] mx-auto"
-                        />
+                        <ScrollReveal>
+                            <img
+                                src={BrandText1}
+                                alt="Txt1"
+                                className="w-[calc(706/1920*100vw)] mx-auto"
+                            />
+                        </ScrollReveal>
                     </div>
                 </div>
                 <div
@@ -102,39 +98,45 @@ function BrandPage() {
                         ],
                     )}
                 >
-                    <p
-                        className="text-[calc(44/1920*100vw)] font-semibold"
-                        data-aos="fade-up"
-                    >
-                        Our Vision
-                    </p>
-                    <p
-                        className={twMerge(
-                            ["text-[calc(18/1920*100vw)]", "font-normal"],
-                            ["mt-10", "leading-[calc(28/1920*100vw)]"],
-                        )}
-                        data-aos="fade-up"
-                    >
-                        우리는 당신의 일상을 풍요롭게 하고, 가치 있는
-                        라이프스타일을 창조하는 브랜드입니다.
-                        <br />
-                        쿨리타의 여정은 셀프 케어 그 이상의 가치를 지향합니다.
-                        <br />
-                        우리는 일반적인 리추얼을 넘어, 일상의 모든 순간을
-                        특별하게 만드는 비전을 담고 있습니다.
-                    </p>
-                    <p
-                        className="text-[calc(18/1920*100vw)] font-normal mt-[46px] leading-[calc(21/1920*100vw)]"
-                        data-aos="fade-up"
-                    >
-                        We are a brand dedicated to enhancing your daily life
-                        and creating a valuable lifestyle.
-                        <br />
-                        Beginning with oral care, we aspire to offer much more.
-                        Our mission is to make
-                        <br />
-                        every moment of your everyday life extraordinary.
-                    </p>
+                    <ScrollReveal>
+                        <p className="text-[calc(44/1920*100vw)] font-semibold">
+                            Our Vision
+                        </p>
+                    </ScrollReveal>
+                    <ScrollReveal>
+                        <p
+                            className={twMerge(
+                                ["text-[calc(18/1920*100vw)]", "font-normal"],
+                                ["mt-10", "leading-[calc(28/1920*100vw)]"],
+                            )}
+                        >
+                            우리는 당신의 일상을 풍요롭게 하고, 가치 있는
+                            라이프스타일을 창조하는 브랜드입니다.
+                            <br />
+                            쿨리타의 여정은 셀프 케어 그 이상의 가치를
+                            지향합니다.
+                            <br />
+                            우리는 일반적인 리추얼을 넘어, 일상의 모든 순간을
+                            특별하게 만드는 비전을 담고 있습니다.
+                        </p>
+                    </ScrollReveal>
+                    <ScrollReveal delay={300}>
+                        <p
+                            className={twMerge(
+                                ["text-[calc(18/1920*100vw)]"],
+                                ["font-normal", "mt-[46px]"],
+                                ["leading-[calc(21/1920*100vw)]"],
+                            )}
+                        >
+                            We are a brand dedicated to enhancing your daily
+                            life and creating a valuable lifestyle.
+                            <br />
+                            Beginning with oral care, we aspire to offer much
+                            more. Our mission is to make
+                            <br />
+                            every moment of your everyday life extraordinary.
+                        </p>
+                    </ScrollReveal>
                 </div>
             </section>
 
@@ -152,42 +154,53 @@ function BrandPage() {
                     )}
                 >
                     <div className="mr-[calc(200/1920*100vw)]">
-                        <p
-                            className={twMerge(
-                                ["text-[calc(44/1920*100vw)]"],
-                                ["font-semibold"],
-                                ["leading-[calc(60/1920*100vw)]"],
-                            )}
-                            data-aos="fade-up"
-                        >
-                            Brand
-                            <br />
-                            Philosophy
-                        </p>
+                        <ScrollReveal>
+                            <p
+                                className={twMerge(
+                                    ["text-[calc(44/1920*100vw)]"],
+                                    ["font-semibold"],
+                                    ["leading-[calc(60/1920*100vw)]"],
+                                )}
+                            >
+                                Brand
+                                <br />
+                                Philosophy
+                            </p>
+                        </ScrollReveal>
                     </div>
                     <div className="flex-1">
-                        <p
-                            className="text-[calc(18/1920*100vw)] leading-[calc(28/1920*100vw)]"
-                            data-aos="fade-up"
-                        >
-                            쿨리타는 자신감 넘치고 자신을 소중히 여기는 사람들을
-                            위해 존재하며 평범함을 거부하고 개성을 존중합니다.
-                            <br />
-                            우리의 비전은 자신에게 솔직하고 개성적인 사람들이
-                            매력적인 존재로 거듭나는 것입니다. 쿨리타는 당신의
-                            자아와 개성을 자유롭게 표현하는 대담한 도전정신을
-                            지향합니다.
-                        </p>
-                        <p
-                            className="mt-10 text-[calc(18/1920*100vw)] leading-[calc(28/1920*100vw)]"
-                            data-aos="fade-up"
-                        >
-                            Culita is designed for confident individuals who
-                            value themselves and reject mediocrity while
-                            embracing uniqueness. Our vision is to empower
-                            honest and individualistic people to become truly
-                            captivating.
-                        </p>
+                        <ScrollReveal delay={300}>
+                            <p
+                                className={twMerge(
+                                    ["text-[calc(18/1920*100vw)]"],
+                                    [" leading-[calc(28/1920*100vw)]"],
+                                )}
+                            >
+                                쿨리타는 자신감 넘치고 자신을 소중히 여기는
+                                사람들을 위해 존재하며 평범함을 거부하고 개성을
+                                존중합니다.
+                                <br />
+                                우리의 비전은 자신에게 솔직하고 개성적인
+                                사람들이 매력적인 존재로 거듭나는 것입니다.
+                                쿨리타는 당신의 자아와 개성을 자유롭게 표현하는
+                                대담한 도전정신을 지향합니다.
+                            </p>
+                        </ScrollReveal>
+                        <ScrollReveal delay={300}>
+                            <p
+                                className={twMerge(
+                                    ["mt-10"],
+                                    ["text-[calc(18/1920*100vw)]"],
+                                    [" leading-[calc(28/1920*100vw)]"],
+                                )}
+                            >
+                                Culita is designed for confident individuals who
+                                value themselves and reject mediocrity while
+                                embracing uniqueness. Our vision is to empower
+                                honest and individualistic people to become
+                                truly captivating.
+                            </p>
+                        </ScrollReveal>
                     </div>
                 </div>
             </section>
@@ -204,60 +217,66 @@ function BrandPage() {
                     )}
                 >
                     <div className="px-[calc(100/1920*100vw)]">
-                        <img
-                            src={BrandText2}
-                            alt="Txt2"
-                            className={twMerge(
-                                ["w-[calc(514/1920*100vw)]"],
-                                [" mb-[calc(80/1920*100vw)]"],
-                            )}
-                            data-aos="fade-up"
-                        />
+                        <ScrollReveal>
+                            <img
+                                src={BrandText2}
+                                alt="Txt2"
+                                className={twMerge(
+                                    ["w-[calc(514/1920*100vw)]"],
+                                    [" mb-[calc(80/1920*100vw)]"],
+                                )}
+                            />
+                        </ScrollReveal>
+
                         <div
                             className={twMerge(
                                 ["text-[#E93118]", " space-y-8"],
                                 [" text-[calc(18/1920*100vw)] "],
                                 ["leading-[calc(28/1920*100vw)]"],
                             )}
-                            data-aos="fade-up"
                         >
-                            <p>
-                                CULITA는 ‘취하다’ 즉, 삶을 음미하는 동시에
-                                <br />
-                                그것을 온전히 포용한다는 의미의 이중적인 매력을
-                                구현합니다.
-                                <br />
-                                <br />
-                                깊고 풍미 가득한 향과 목 넘김이 따뜻한 위스키를
-                                음미하듯
-                                <br />
-                                평범한 리추얼마저도 특별해지는 상상을
-                                즐겨보세요.
-                                <br />
-                                <br />
-                                자기 관리의 매 순간은 당신의 열정에 대한 축배가
-                                되며, <br />
-                                당신의 소중한 삶을 축하하는 시간이 될 것입니다.
-                            </p>
-                            <p>
-                                Culita embodies a dual charm that encompasses
-                                both ‘savoring’
-                                <br />
-                                and fully embracing life. Enjoy imagining even
-                                the most ordinary rituals
-                                <br />
-                                become extraordinary, much like savoring a warm
-                                whiskey
-                                <br />
-                                with its rich and complex aroma.
-                                <br />
-                                <br />
-                                Each moment of self-care will serve as a toast
-                                to your passions,
-                                <br />
-                                transforming into a celebration of your
-                                cherished life.
-                            </p>
+                            <ScrollReveal delay={500}>
+                                <p>
+                                    CULITA는 ‘취하다’ 즉, 삶을 음미하는 동시에
+                                    <br />
+                                    그것을 온전히 포용한다는 의미의 이중적인
+                                    매력을 구현합니다.
+                                    <br />
+                                    <br />
+                                    깊고 풍미 가득한 향과 목 넘김이 따뜻한
+                                    위스키를 음미하듯
+                                    <br />
+                                    평범한 리추얼마저도 특별해지는 상상을
+                                    즐겨보세요.
+                                    <br />
+                                    <br />
+                                    자기 관리의 매 순간은 당신의 열정에 대한
+                                    축배가 되며, <br />
+                                    당신의 소중한 삶을 축하하는 시간이 될
+                                    것입니다.
+                                </p>
+                            </ScrollReveal>
+                            <ScrollReveal delay={500}>
+                                <p>
+                                    Culita embodies a dual charm that
+                                    encompasses both ‘savoring’
+                                    <br />
+                                    and fully embracing life. Enjoy imagining
+                                    even the most ordinary rituals
+                                    <br />
+                                    become extraordinary, much like savoring a
+                                    warm whiskey
+                                    <br />
+                                    with its rich and complex aroma.
+                                    <br />
+                                    <br />
+                                    Each moment of self-care will serve as a
+                                    toast to your passions,
+                                    <br />
+                                    transforming into a celebration of your
+                                    cherished life.
+                                </p>
+                            </ScrollReveal>
                         </div>
                     </div>
                 </div>
@@ -279,13 +298,14 @@ function BrandPage() {
                         ["bottom-[calc(600/1920*100vw)]"],
                     )}
                 >
-                    <img
-                        src={BrandText3}
-                        alt="Txt3"
-                        className="h-[calc(204/1920*100vw)] mb-8"
-                        data-aos="fade-up"
-                    />
-                    <div data-aos="zoom-in" data-aos-delay="500">
+                    <ScrollReveal delay={500}>
+                        <img
+                            src={BrandText3}
+                            alt="Txt3"
+                            className="h-[calc(204/1920*100vw)] "
+                        />
+                    </ScrollReveal>
+                    <ScrollReveal delay={500}>
                         <svg
                             viewBox="0 0 37.123 44.886"
                             className="w-[37px] h-[45px] text-white fill-current"
@@ -295,21 +315,24 @@ function BrandPage() {
                                 transform="translate(-115.145)"
                             />
                         </svg>
-                    </div>
-
-                    <span
-                        className={twMerge(
-                            ["text-[calc(26/1920*100vw)]"],
-                            [" text-center", " text-white"],
-                            [" leading-[calc(32/1920*100vw)]"],
-                            ["mt-[calc(35/1920*100vw)]"],
-                        )}
-                        data-aos="fade-up"
+                    </ScrollReveal>
+                    <ScrollReveal
+                        delay={500}
+                        className={twMerge(["flex", "items-center"])}
                     >
-                        쿨리타와 함께하는 모든 순간이 당신의 열정과
-                        <br />
-                        소중한 삶에 건배가 되기를 바랍니다.
-                    </span>
+                        <span
+                            className={twMerge(
+                                ["text-[calc(26/1920*100vw)]"],
+                                [" text-center", " text-white"],
+                                [" leading-[calc(32/1920*100vw)]"],
+                                ["mt-[calc(35/1920*100vw)]"],
+                            )}
+                        >
+                            쿨리타와 함께하는 모든 순간이 당신의 열정과
+                            <br />
+                            소중한 삶에 건배가 되기를 바랍니다.
+                        </span>
+                    </ScrollReveal>
                 </div>
             </section>
         </div>
