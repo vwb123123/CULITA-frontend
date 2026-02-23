@@ -90,6 +90,7 @@ function MyCancelHistory() {
             setIsLoading(false);
         }
     }, [selectedPeriod, currentPage]);
+
     useEffect(() => {
         setCurrentPage(1);
         fetchCancelData().then(() => {});

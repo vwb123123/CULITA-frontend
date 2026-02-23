@@ -38,7 +38,7 @@ function MyInquiryDetail() {
                 setIsLoading(false);
             }
         };
-        fetchDetail();
+        fetchDetail().then(() => {});
     }, [id, navigate]);
 
     const handleDelete = async () => {
@@ -108,7 +108,7 @@ function MyInquiryDetail() {
                 <div
                     className="prose prose-sm max-w-none min-h-[200px] text-[15px] leading-relaxed"
                     dangerouslySetInnerHTML={{
-                        __html: inquiry.content || "<p>내용이 없습니다.</p>",
+                        __html: inquiry.content || <p>내용이 없습니다.</p>,
                     }}
                 />
 
