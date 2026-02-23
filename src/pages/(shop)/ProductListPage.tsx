@@ -47,23 +47,27 @@ function ProductListPage() {
                     const categoryData = await getCategoryByPath(
                         activeTab.path,
                     );
-                    categoryId = categoryData.category.id;
+                    categoryId = categoryData?.category?.id;
                 }
 
                 const res = await fetchProducts({
                     limit: 20,
                     categoryId: categoryId,
                 });
-                setProducts(res.data);
+
+                setProducts(Array.isArray(res.data) ? res.data : []);
             } catch (e) {
                 console.log("데이터를 가져오는데 실패했습니다.", e);
+                setProducts([]);
             }
         };
         loadData().then(() => {});
     }, [activeTab]);
 
     const slots = useMemo(() => {
-        if (products.length === 0) return [];
+        if (!products || !Array.isArray(products) || products.length === 0)
+            return [];
+
         const result: ListSlot[] = [];
         const reversedProducts = [...products].reverse();
 

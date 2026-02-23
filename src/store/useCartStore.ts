@@ -17,12 +17,10 @@ interface CartState {
     fetchCart: () => Promise<void>;
     clearCart: () => void;
 
-    //  장바구니 조작
     addItem: (productId: number, quantity: number) => Promise<void>;
     updateQuantity: (itemId: number, quantity: number) => Promise<void>;
     removeItem: (itemId: number) => Promise<void>;
 
-    //  UI 계산용
     getTotalCount: () => number;
     getTotalPrice: () => number;
 }
@@ -112,14 +110,22 @@ const useCartStore = create<CartState>()(
                 }
             },
 
-            getTotalCount: () =>
-                get().items.reduce((total, item) => total + item.quantity, 0),
+            getTotalCount: () => {
+                const items = get().items || [];
+                return items.reduce((total, item) => total + item.quantity, 0);
+            },
 
             getTotalPrice: () => {
-                const total = get().getTotalPrice();
-                if (total === 0) return 0;
-                const shippingFee = total >= 30000 ? 0 : 3000;
-                return total + shippingFee;
+                const items = get().items || [];
+                const subTotal = items.reduce(
+                    (total, item) => total + item.totalPrice,
+                    0,
+                );
+
+                if (subTotal === 0) return 0;
+
+                const shippingFee = subTotal >= 30000 ? 0 : 3000;
+                return subTotal + shippingFee;
             },
         }),
         {

@@ -119,7 +119,7 @@ function ProductDetailPage() {
             totalPrice: product.price * quantity,
         };
         setOrderItems([orderItem]);
-        navigate("/orders");
+        navigate("/orders/checkout");
     };
 
     const incrementQuantity = () => {

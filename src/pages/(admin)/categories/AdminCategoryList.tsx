@@ -10,7 +10,7 @@ import {
     FiRefreshCw,
 } from "react-icons/fi";
 import { deleteCategory } from "../../../api/admin.category.api";
-import type { Category } from "../../../types/category";
+import type { Category, CategoryResponse } from "../../../types/category";
 import { getCategories } from "../../../api/category.api.ts";
 import { AxiosError } from "axios";
 
@@ -18,20 +18,32 @@ function AdminCategoryList() {
     const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState(false);
 
-    const loadCategories = async () => {
-        setLoading(true);
-        try {
-            const data = await getCategories();
-            setCategories(data);
-        } catch (error) {
-            console.error("카테고리 로딩 실패:", error);
-            alert("카테고리 정보를 불러오지 못했습니다.");
-        } finally {
-            setLoading(false);
-        }
-    };
+    type GetCategoriesResult = Category[] | CategoryResponse;
 
     useEffect(() => {
+        const loadCategories = async () => {
+            setLoading(true);
+            try {
+                const data = (await getCategories()) as GetCategoriesResult;
+
+                let categoryList: Category[] = [];
+
+                if (Array.isArray(data)) {
+                    categoryList = data;
+                } else if (data && "category" in data) {
+                    const target = data.category;
+                    categoryList = Array.isArray(target) ? target : [target];
+                }
+
+                setCategories(categoryList);
+            } catch (error) {
+                console.error("카테고리 로딩 실패:", error);
+                setCategories([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         loadCategories().then(() => {});
     }, []);
 
@@ -46,7 +58,6 @@ function AdminCategoryList() {
         try {
             await deleteCategory(id);
             alert("삭제되었습니다.");
-            loadCategories().then(() => {});
         } catch (error) {
             console.error("삭제 실패:", error);
             let message = "삭제 중 오류가 발생했습니다.";
@@ -188,7 +199,7 @@ function AdminCategoryList() {
                                         </div>
                                     </td>
                                 </tr>
-                            ) : categories.length === 0 ? (
+                            ) : categories?.length === 0 ? (
                                 <tr>
                                     <td
                                         colSpan={3}
@@ -198,7 +209,7 @@ function AdminCategoryList() {
                                     </td>
                                 </tr>
                             ) : (
-                                categories.map((cat) => (
+                                categories?.map((cat) => (
                                     <CategoryItem
                                         key={cat.id}
                                         category={cat}

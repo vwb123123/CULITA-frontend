@@ -8,8 +8,13 @@ import useOrderStore from "../../store/useOrderStore.ts";
 
 function CartPage() {
     const navigate = useNavigate();
-    const { items, fetchCart, removeItem, updateQuantity, loading } =
-        useCartStore();
+    const {
+        items = [],
+        fetchCart,
+        removeItem,
+        updateQuantity,
+        loading,
+    } = useCartStore();
     const { setOrderItems } = useOrderStore();
     const { isLoggedIn } = useAuthStore();
     const [checkedIds, setCheckedIds] = useState<number[]>([]);
@@ -18,7 +23,8 @@ function CartPage() {
         fetchCart().then(() => {});
     }, [fetchCart]);
 
-    const isAllChecked = items.length > 0 && checkedIds.length === items.length;
+    const isAllChecked =
+        (items?.length ?? 0) > 0 && checkedIds.length === items.length;
 
     const toggleAllChecked = () => {
         setCheckedIds(isAllChecked ? [] : items.map((item) => item.id));
@@ -55,8 +61,8 @@ function CartPage() {
         navigate("/orders/checkout");
     };
 
-    const productTotal = items.reduce(
-        (acc, item) => acc + item.product.price * item.quantity,
+    const productTotal = (items || []).reduce(
+        (acc, item) => acc + (item.product?.price ?? 0) * item.quantity,
         0,
     );
     const shippingFee = productTotal >= 30000 || productTotal === 0 ? 0 : 3000;

@@ -171,7 +171,7 @@ function AdminUserList() {
                                         </div>
                                     </td>
                                 </tr>
-                            ) : users.length === 0 ? (
+                            ) : users?.length === 0 ? (
                                 <tr>
                                     <td
                                         colSpan={6}
@@ -181,7 +181,7 @@ function AdminUserList() {
                                     </td>
                                 </tr>
                             ) : (
-                                users.map((user) => (
+                                users?.map((user) => (
                                     <tr
                                         key={user.id}
                                         className="hover:bg-orange-50/30 transition-colors duration-200"
