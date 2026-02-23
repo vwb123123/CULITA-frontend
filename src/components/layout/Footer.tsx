@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import { Link } from "react-router";
-import footerLogo from "../../assets/footer/footer_logos.png";
+import footerLogo from "../../assets/footer/logo2.png";
 import footerLogo2 from "../../assets/footer/footer_logos.png";
 
 function Footer() {
