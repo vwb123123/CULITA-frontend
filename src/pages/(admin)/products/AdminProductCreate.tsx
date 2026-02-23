@@ -21,6 +21,7 @@ import type {
 import type { Category } from "../../../types/category";
 import { getCategories } from "../../../api/category.api.ts";
 import { AxiosError } from "axios";
+import type { ProductImageType } from "../../../types/product.ts";
 
 function AdminProductCreate() {
     const navigate = useNavigate();
@@ -72,15 +73,19 @@ function AdminProductCreate() {
         e.target.value = "";
     };
 
-    const updateImageMeta = (
+    const updateImageMeta = <K extends keyof LocalImageState>(
         index: number,
-        field: keyof LocalImageState,
-        value: any,
+        field: K,
+        value: LocalImageState[K],
     ) => {
-        const updated = [...localImages];
-        // @ts-ignore
-        updated[index][field] = value;
-        setLocalImages(updated);
+        setLocalImages((prev) => {
+            const updated = [...prev];
+            updated[index] = {
+                ...updated[index],
+                [field]: value,
+            };
+            return updated;
+        });
     };
 
     const removeImage = (index: number) => {
@@ -99,6 +104,8 @@ function AdminProductCreate() {
 
         try {
             const uploadPromises = localImages.map(async (img) => {
+                if (!img.file) throw new Error("파일이 존재하지 않습니다.");
+
                 const url = await uploadImage(img.file, "products");
                 return {
                     url,
@@ -375,7 +382,8 @@ function AdminProductCreate() {
                                                 updateImageMeta(
                                                     idx,
                                                     "type",
-                                                    e.target.value,
+                                                    e.target
+                                                        .value as ProductImageType,
                                                 )
                                             }
                                             className="w-full text-xs font-medium border border-gray-200 rounded-lg p-2 outline-none focus:border-[#ff4600] bg-white"

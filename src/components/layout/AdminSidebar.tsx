@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router";
+import { NavLink, Link, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import {
     FiHome,
@@ -28,6 +28,7 @@ const MENUS = [
 ];
 
 function AdminSidebar() {
+    const navigate = useNavigate();
     const { logout } = useAuthStore();
 
     const handleLogout = () => {
@@ -39,31 +40,17 @@ function AdminSidebar() {
 
     return (
         <aside
-            className={twMerge([
-                "w-64",
-                "h-screen",
-                "bg-white",
-                "border-r",
-                "border-gray-200",
-                "fixed",
-                "left-0",
-                "top-0",
-                "z-50",
-                "flex",
-                "flex-col",
-                "transition-all",
-                "duration-300",
-            ])}
+            className={twMerge(
+                ["w-64", "h-screen", "bg-white", "border-r"],
+                ["border-gray-200", "fixed", "left-0", "top-0"],
+                ["z-50", "flex", "flex-col", "transition-all", "duration-300"],
+            )}
         >
             <div
-                className={twMerge([
-                    "h-17.5",
-                    "flex",
-                    "items-center",
-                    "justify-center",
-                    "border-b",
-                    "border-gray-100",
-                ])}
+                className={twMerge(
+                    ["h-17.5", "flex", "items-center"],
+                    ["justify-center", "border-b", "border-gray-100"],
+                )}
             >
                 <Link to="/admin" className="w-32">
                     <img
@@ -84,17 +71,11 @@ function AdminSidebar() {
                         to={menu.path}
                         end={menu.path === "/admin"}
                         className={({ isActive }) =>
-                            twMerge([
-                                "flex",
-                                "items-center",
-                                "gap-3",
-                                "px-4",
-                                "py-3",
-                                "rounded-xl",
-                                "text-sm",
-                                "font-medium",
-                                "transition-all",
-                                "duration-200",
+                            twMerge(
+                                ["flex", "items-center", "gap-3"],
+                                ["px-4", "py-3", "rounded-xl"],
+                                ["text-sm", "font-medium"],
+                                ["transition-all", "duration-200"],
                                 isActive
                                     ? ["bg-[#ff4600]/10", "text-[#ff4600]"]
                                     : [
@@ -102,7 +83,7 @@ function AdminSidebar() {
                                           "hover:bg-gray-50",
                                           "hover:text-gray-900",
                                       ],
-                            ])
+                            )
                         }
                     >
                         <span className="text-lg">{menu.icon}</span>
@@ -111,21 +92,32 @@ function AdminSidebar() {
                 ))}
             </nav>
 
-            <div className="p-4 border-t border-gray-100">
+            <div className="p-4 border-t border-gray-100 flex flex-col">
+                <button
+                    onClick={() => {
+                        alert("홈으로 가시겠습니까?");
+                        navigate("/");
+                    }}
+                    className={twMerge(
+                        ["flex", "items-center"],
+                        ["gap-3", "w-full"],
+                        ["px-4", "py-3"],
+                        ["text-sm", "text-gray-500"],
+                        ["hover:text-[#ff4600]", "transition-colors"],
+                    )}
+                >
+                    <FiLogOut className="text-lg" />
+                    CULITA 홈
+                </button>
                 <button
                     onClick={handleLogout}
-                    className={twMerge([
-                        "flex",
-                        "items-center",
-                        "gap-3",
-                        "w-full",
-                        "px-4",
-                        "py-3",
-                        "text-sm",
-                        "text-gray-500",
-                        "hover:text-[#ff4600]",
-                        "transition-colors",
-                    ])}
+                    className={twMerge(
+                        ["flex", "items-center"],
+                        ["gap-3", "w-full"],
+                        ["px-4", "py-3"],
+                        ["text-sm", "text-gray-500"],
+                        ["hover:text-[#ff4600]", "transition-colors"],
+                    )}
                 >
                     <FiLogOut className="text-lg" />
                     로그아웃

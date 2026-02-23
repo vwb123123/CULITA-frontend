@@ -69,7 +69,7 @@ function AdminCategoryList() {
                     <td className="py-4 px-6">
                         <div
                             className="flex items-center gap-2"
-                            style={{ paddingLeft: `${depth * 40}px` }} // Depth에 따른 들여쓰기
+                            style={{ paddingLeft: `${depth * 40}px` }}
                         >
                             {depth > 0 && (
                                 <FiCornerDownRight className="text-gray-300" />
@@ -100,7 +100,7 @@ function AdminCategoryList() {
                         <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                             <Link
                                 to={`/admin/categories/${category.path}/edit`}
-                                state={{ categoryId: category.id }} // Path로 조회하므로 ID를 state로 넘김 (또는 상세 조회 API 수정)
+                                state={{ categoryId: category.id }}
                                 className="p-2 text-gray-400 hover:text-[#ff4600] hover:bg-[#ff4600]/10 rounded-full transition-all"
                                 title="수정"
                             >

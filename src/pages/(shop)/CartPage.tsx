@@ -93,7 +93,10 @@ function CartPage() {
                         <button
                             onClick={() => navigate("/products")}
                             className={twMerge(
-                                "px-10 py-3 border border-black text-[12px] uppercase hover:bg-black hover:text-white transition-all duration-300",
+                                ["px-10", "py-3", "text-xs"],
+                                ["border", "border-black"],
+                                ["hover:bg-black", "hover:text-white"],
+                                ["transition-all", "duration-300"],
                             )}
                         >
                             쇼핑하러가기
@@ -157,7 +160,7 @@ function CartPage() {
                                                         alt={item.product.name}
                                                         onClick={() =>
                                                             navigate(
-                                                                `/products/${item.id - 3}`,
+                                                                `/products/${item.product.id}`,
                                                             )
                                                         }
                                                         className="w-[85px] h-[85px] object-cover border border-[#eee] cursor-pointer"
@@ -168,7 +171,7 @@ function CartPage() {
                                                         className="font-bold text-[12px] cursor-pointer"
                                                         onClick={() =>
                                                             navigate(
-                                                                `/products/${item.id - 3}`,
+                                                                `/products/${item.product.id}`,
                                                             )
                                                         }
                                                     >

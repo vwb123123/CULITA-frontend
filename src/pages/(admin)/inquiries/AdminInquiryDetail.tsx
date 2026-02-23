@@ -32,7 +32,6 @@ function AdminInquiryDetail() {
             try {
                 const res = await getAdminInquiryById(Number(id));
                 setInquiry(res.data);
-                // 기존 답변이 있다면 상태에 세팅
                 setAnswer(res.data.answer || "");
             } catch (error) {
                 console.error("상세 정보 로드 실패:", error);

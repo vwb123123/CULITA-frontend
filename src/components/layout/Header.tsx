@@ -36,13 +36,15 @@ const ACCOUNT_MENU_LOGIN: MenuItem[] = [
 function Header() {
     const navigate = useNavigate();
 
-    const { isLoggedIn, logout } = useAuthStore();
+    const { isLoggedIn, logout, user } = useAuthStore();
 
     const { fetchCart, clearCart, getTotalCount } = useCartStore();
     const cartItemsCount = getTotalCount();
 
     const [isAccountMenuHovered, setIsAccountMenuHovered] = useState(false);
     const [isHeaderHovered, setIsHeaderHovered] = useState(false);
+
+    const isAdmin = user?.role === "ADMIN";
 
     const handleLogout = () => {
         const confirm = window.confirm("로그아웃 하시겠습니까?");
@@ -115,7 +117,7 @@ function Header() {
                     <div className={twMerge(["h-[70px]"])}>
                         <nav
                             className={twMerge(
-                                ["hidden", "lg:flex", "flex"],
+                                ["hidden", "flex"],
                                 ["items-center", "h-full", "text-[16.5px]"],
                                 ["font-medium", "gap-8"],
                             )}
@@ -130,10 +132,14 @@ function Header() {
                                 >
                                     <Link
                                         to={menu.path}
-                                        className={twMerge([
-                                            "relative",
-                                            "py-5",
-                                        ])}
+                                        data-text={menu.name}
+                                        className={twMerge(
+                                            ["relative", "py-5"],
+                                            ["transition-all", "duration-200"],
+                                            [
+                                                "hover:[text-shadow:0.5px_0_0_currentColor]",
+                                            ],
+                                        )}
                                         onClick={() => {
                                             requestAnimationFrame(() => {
                                                 window.scrollTo({ top: 0 });
@@ -186,13 +192,8 @@ function Header() {
             {/* ACCOUNT 메뉴 영역 */}
             <div
                 className={twMerge(
-                    [
-                        "overflow-hidden",
-                        "transition-all",
-                        "duration-300",
-                        "bg-white",
-                        "z-40",
-                    ],
+                    ["overflow-hidden", "transition-all"],
+                    ["duration-300", "bg-white", "z-40"],
                     isAccountMenuHovered ? "h-[240px]" : "max-h-0",
                 )}
                 onMouseEnter={() => setIsAccountMenuHovered(true)}
@@ -209,17 +210,26 @@ function Header() {
                                         handleMenuClick(item, e);
                                         window.scrollTo({ top: 0 });
                                     }}
-                                    className={twMerge([
-                                        "block",
-                                        "px-7",
-                                        "py-1",
-                                        "text-[14px]",
-                                        "hover:font-bold",
-                                    ])}
+                                    className={twMerge(
+                                        ["block", "px-7", "py-1"],
+                                        ["text-[14px]", "hover:font-bold"],
+                                    )}
                                 >
                                     {item.name}
                                 </Link>
                             ))}
+                            {isAdmin && (
+                                <Link
+                                    to={"/admin"}
+                                    className={twMerge(
+                                        ["block", "px-7", "py-1"],
+                                        ["text-[14px]", "hover:font-bold"],
+                                        ["text-red-500"],
+                                    )}
+                                >
+                                    관리자 페이지
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </div>

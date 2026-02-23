@@ -127,29 +127,30 @@ const MyPageHome = () => {
                         </h3>
                     </div>
 
-                    <div className="flex justify-between items-center text-center mb-10 px-4 gap-2">
+                    <div className="flex justify-between items-center text-center mb-10 px-4">
                         {orderStats.map((item, idx, arr) => (
                             <div
                                 key={item.label}
-                                className="flex flex-1 items-center justify-center"
+                                className="w-1/4 flex items-center justify-center relative"
                             >
                                 <div className="flex flex-col items-center">
                                     <span
-                                        className={twMerge([
-                                            "text-2xl sm:text-3xl font-light mb-3 transition-all",
+                                        className={twMerge(
+                                            ["text-2xl", "font-light"],
+                                            ["mb-3", "transition-all"],
                                             item.count > 0
                                                 ? "text-[#ff4600] font-medium scale-110"
                                                 : "text-gray-200",
-                                        ])}
+                                        )}
                                     >
                                         {item.count}
                                     </span>
-                                    <span className="text-[11px] sm:text-[12px] text-gray-600 font-medium whitespace-nowrap">
+                                    <span className="text-sm text-gray-600 font-medium whitespace-nowrap">
                                         {item.label}
                                     </span>
                                 </div>
                                 {idx !== arr.length - 1 && (
-                                    <div className="flex-1 flex justify-center">
+                                    <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2">
                                         <span className="text-gray-500 text-xl">
                                             <IoIosArrowForward />
                                         </span>

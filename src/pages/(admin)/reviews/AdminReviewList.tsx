@@ -167,7 +167,6 @@ function AdminReviewList() {
                                             ))}
                                         </div>
                                         <div className="text-gray-600 line-clamp-2 leading-relaxed">
-                                            {/* content가 null일 경우 처리 */}
                                             {review.content || (
                                                 <span className="text-gray-300 italic">
                                                     내용 없음

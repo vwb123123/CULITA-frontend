@@ -92,7 +92,6 @@ function AdminProductEdit() {
         init();
     }, [id, reset, navigate]);
 
-    // 카테고리 렌더링 헬퍼
     const renderCategoryOptions = (
         cats: Category[],
         depth = 0,
@@ -112,8 +111,8 @@ function AdminProductEdit() {
     const handleFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const newFiles = Array.from(e.target.files).map((file, index) => ({
-                id: `new-${Date.now()}-${index}`, // 임시 ID
-                file, // 파일 객체 존재
+                id: `new-${Date.now()}-${index}`,
+                file,
                 previewUrl: URL.createObjectURL(file),
                 type: "DETAIL" as const,
                 order: localImages.length + index,
@@ -123,16 +122,19 @@ function AdminProductEdit() {
         e.target.value = "";
     };
 
-    // 메타데이터 수정
-    const updateImageMeta = (
+    const updateImageMeta = <K extends keyof LocalImageState>(
         index: number,
-        field: keyof LocalImageState,
-        value: any,
+        field: K,
+        value: LocalImageState[K],
     ) => {
-        const updated = [...localImages];
-        // @ts-ignore
-        updated[index][field] = value;
-        setLocalImages(updated);
+        setLocalImages((prev) => {
+            const updated = [...prev];
+            updated[index] = {
+                ...updated[index],
+                [field]: value,
+            };
+            return updated;
+        });
     };
 
     const removeImage = (index: number) => {
@@ -225,7 +227,7 @@ function AdminProductEdit() {
                 onSubmit={handleSubmit(onSubmit)}
                 className="grid grid-cols-1 lg:grid-cols-3 gap-8"
             >
-                {/* [Left] 텍스트 정보 */}
+                {/* 텍스트 정보 */}
                 <div className="lg:col-span-2 space-y-8 bg-white p-8 rounded-[20px] shadow-sm border border-gray-100">
                     <div className="space-y-6">
                         <h3 className="text-lg font-bold text-gray-800 border-b pb-3">
@@ -393,7 +395,7 @@ function AdminProductEdit() {
                     </div>
                 </div>
 
-                {/* [Right] 이미지 업로드 */}
+                {/* 이미지 업로드 */}
                 <div className="lg:col-span-1 space-y-6">
                     <div className="bg-white p-6 rounded-[20px] shadow-sm border border-gray-100 sticky top-6">
                         <h3 className="text-lg font-bold text-gray-800 border-b pb-3 mb-4 flex items-center gap-2">
@@ -447,7 +449,8 @@ function AdminProductEdit() {
                                                 updateImageMeta(
                                                     idx,
                                                     "type",
-                                                    e.target.value,
+                                                    e.target
+                                                        .value as LocalImageState["type"],
                                                 )
                                             }
                                             className="w-full text-xs font-medium border border-gray-200 rounded-lg p-2 outline-none focus:border-[#ff4600] bg-white"

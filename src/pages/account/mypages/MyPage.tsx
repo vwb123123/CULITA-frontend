@@ -15,9 +15,7 @@ const TABS = [
 const MyPage = () => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
-    const { isLoggedIn, user } = useAuthStore();
-
-    const isAdmin = user?.role === "ADMIN";
+    const { isLoggedIn } = useAuthStore();
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -29,14 +27,10 @@ const MyPage = () => {
 
     return (
         <div
-            className={twMerge([
-                "w-full",
-                "max-w-[1168px]",
-                "mx-auto",
-                "pt-[170px]",
-                "pb-[200px]",
-                "px-10",
-            ])}
+            className={twMerge(
+                ["w-full", "max-w-[1168px]", "mx-auto"],
+                ["pt-[170px]", "pb-[200px]", "px-10"],
+            )}
         >
             <h2
                 className={twMerge(
@@ -77,21 +71,6 @@ const MyPage = () => {
                         {tab.label}
                     </button>
                 ))}
-
-                {/* 관리자 전용 버튼 */}
-                {isAdmin && (
-                    <button
-                        onClick={() => navigate("/admin")}
-                        className={twMerge(
-                            ["text-sm", "font-medium"],
-                            ["px-4", "py-1.5"],
-                            ["border", "border-red-500", "text-red-600"],
-                            ["rounded-full", "hover:bg-red-50"],
-                        )}
-                    >
-                        관리자 페이지
-                    </button>
-                )}
             </nav>
 
             <main>

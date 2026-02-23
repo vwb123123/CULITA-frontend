@@ -51,6 +51,7 @@ import AdminOrderDetail from "../pages/(admin)/orders/AdminOrderDetail.tsx";
 import AdminReviewList from "../pages/(admin)/reviews/AdminReviewList.tsx";
 import AdminInquiryList from "../pages/(admin)/inquiries/AdminInquiryList.tsx";
 import AdminInquiryDetail from "../pages/(admin)/inquiries/AdminInquiryDetail.tsx";
+import AdminDashboard from "../pages/(admin)/dashboard/AdminDashboard.tsx";
 
 export const adminOnlyLoader = () => {
     const { isLoggedIn, user } = useAuthStore.getState();
@@ -136,7 +137,7 @@ const router = createBrowserRouter([
         element: <AdminLayout />,
         loader: adminOnlyLoader,
         children: [
-            { index: true, element: <div>대시보드 페이지 (준비중)</div> },
+            { index: true, element: <AdminDashboard /> },
             {
                 path: "users",
                 children: [

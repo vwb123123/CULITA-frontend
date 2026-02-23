@@ -101,7 +101,10 @@ function MainFilm() {
                             <motion.li
                                 key={index}
                                 variants={itemVariants}
-                                className={twMerge(["break-inside-avoid"])}
+                                className={twMerge(
+                                    ["break-inside-avoid"],
+                                    ["overflow-hidden", "rounded-[20px]"],
+                                )}
                             >
                                 <img
                                     src={item.image}
@@ -109,7 +112,7 @@ function MainFilm() {
                                     className={twMerge(
                                         ["rounded-[20px]", " cursor-pointer"],
                                         ["transition-transform"],
-                                        ["duration-300", "hover:scale-[1.05]"],
+                                        ["duration-500", "hover:scale-[1.05]"],
                                     )}
                                 />
                             </motion.li>
@@ -123,14 +126,7 @@ function MainFilm() {
                     ["flex", "flex-col", "pb-[160px]"],
                 )}
             >
-                <img
-                    src={ForCulita}
-                    alt="ForMeCulita"
-                    className={twMerge(
-                        ["max-w-full", "object-contain"],
-                        ["inline-block"],
-                    )}
-                />
+                <img src={ForCulita} alt="ForMeCulita" />
                 <ScrollReveal delay={300}>
                     <p
                         className={twMerge(
@@ -164,7 +160,7 @@ function MainFilm() {
                                 ],
                             )}
                         >
-                            <span className={twMerge("pt-2")}>경험하기</span>
+                            <span className={"pt-2"}>경험하기</span>
                         </Link>
                     </ScrollReveal>
                 </span>
