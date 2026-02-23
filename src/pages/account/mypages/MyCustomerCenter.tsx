@@ -4,11 +4,13 @@ import type { InquiriesResponse, Inquiry } from "../../../types/Inquiries.ts";
 import { getInquiries } from "../../../api/Inquiries.api.ts";
 import Spinner from "../../../components/common/Spinner.tsx";
 import { twMerge } from "tailwind-merge";
+import useAuthStore from "../../../store/useAuthStore.ts";
 
 function MyCustomerCenter() {
     const navigate = useNavigate();
     const [inquiries, setInquiries] = useState<Inquiry[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const { user: currentUser } = useAuthStore();
 
     const fetchInquiries = async () => {
         setIsLoading(true);
@@ -31,6 +33,11 @@ function MyCustomerCenter() {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const formatDate = (dateString: string) => {
+        const d = new Date(dateString);
+        return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
     };
 
     useEffect(() => {
@@ -84,10 +91,10 @@ function MyCustomerCenter() {
                                         {item.title}
                                     </td>
                                     <td className="py-5 text-gray-600">
-                                        이서연
+                                        {item.user?.name || currentUser?.name}
                                     </td>
                                     <td className="py-5 text-gray-400 font-mono">
-                                        2026.02.09
+                                        {formatDate(item.createdAt)}
                                     </td>
                                     <td className="py-5 text-gray-300">
                                         {item.status === "ANSWERED" ? "O" : "X"}
