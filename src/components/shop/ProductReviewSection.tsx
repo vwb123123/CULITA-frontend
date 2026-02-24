@@ -105,7 +105,6 @@ function ProductReviewSection({ productId }: Props) {
             .then((res) => {
                 let orders: Order[] = [];
 
-                // 타입 가드: res가 배열인지 혹은 data 속성을 가진 객체인지 확인
                 const responseData = res as unknown as
                     | { data: Order[] | { data: Order[] } }
                     | Order[];
@@ -192,13 +191,11 @@ function ProductReviewSection({ productId }: Props) {
 
         setIsLoading(true);
         try {
-            // 1. 새 파일들만 업로드
             const uploadPromises = selectedImages.map((file) =>
                 uploadImage(file, "reviews"),
             );
             const newUploadedUrls = await Promise.all(uploadPromises);
 
-            // 2. 기존 URL(수정 시 유지한 것) + 새로 업로드된 URL
             const finalImageUrls = [
                 ...imagePreviews.filter((url) => !url.startsWith("blob:")),
                 ...newUploadedUrls,
@@ -328,7 +325,6 @@ function ProductReviewSection({ productId }: Props) {
                                     구매 인증
                                 </span>
 
-                                {/* ✅ 날짜 출력: YYYY-MM-DD 형식 */}
                                 <p className="text-[11px] text-gray-400 mt-2">
                                     {new Date(review.createdAt)
                                         .toLocaleDateString("ko-KR", {
